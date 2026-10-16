@@ -8,7 +8,7 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 export default function Header() {
   const { addDarkMode, darkToggle } = useContext(LightContext);
   return (
-    <header className="flex justify-between items-center w-full border border-[#ede9e9] h-22 pr-5 dark:border-gray-200">
+    <header className="flex justify-between items-center w-full border border-[#ede9e9] h-22 pr-5 dark:border-gray-700">
       <img
         src={darkToggle ? image_darkMode : image_lightMode}
         alt=""
