@@ -15,7 +15,7 @@ export default function Header() {
         className="h-16 sm:h-18 md:h-20 lg:h-20"
       />
       <section className="buttons">
-        <button className="bg-blue-600 h-10 w-10 rounded-full" onClick={addDarkMode}><FontAwesomeIcon icon={darkToggle ? faSun : faMoon} /></button>
+        <button className="h-10 w-10 btn rounded-full" onClick={addDarkMode}><FontAwesomeIcon icon={darkToggle ? faSun : faMoon} /></button>
       </section>
     </header>
   );
