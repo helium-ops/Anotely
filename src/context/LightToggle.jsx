@@ -9,12 +9,15 @@ const LightProvider = ({ children }) => {
 
   function addDarkMode() {
     setDarkToggle((prev) => !prev);
+    if(darkToggle === false){
+      document.documentElement.classList.add("dark");
+    } else{
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", JSON.stringify(darkToggle));
   }
 
-  useEffect(() => {
-    localStorage.setItem("theme", JSON.stringify(darkToggle));
-    document.documentElement.classList.add("dark", darkToggle);
-  }, [darkToggle]);
+ 
 
   return (
     <LightContext.Provider value={{ addDarkMode, darkToggle }}>
