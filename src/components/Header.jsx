@@ -12,7 +12,7 @@ export default function Header() {
       <img
         src={darkToggle ? image_darkMode : image_lightMode}
         alt=""
-        className="h-16 sm:h-18 md:h-20 lg:h-20"
+        className="h-16 sm:h-18 md:h-20 lg:h-19"
       />
       <section className="buttons">
         <button className="h-10 w-10 btn rounded-full text-center" onClick={addDarkMode}><FontAwesomeIcon icon={darkToggle ? faSun : faMoon} /></button>

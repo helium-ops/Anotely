@@ -1,9 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer components{
-    .btn{
-        @apply bg-blue-600 dark:bg-blue-500 text-white dark:text-white
-    }
+@layer components {
+  .btn {
+    @apply bg-blue-600 dark:bg-blue-500 text-white dark:text-white hover:opacity-90 transition duration-20 outline-none;
+  }
 }
