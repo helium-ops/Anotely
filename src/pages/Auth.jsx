@@ -117,7 +117,9 @@ const Auth = () => {
                   id="password"
                   placeholder="●●●●●●●●"
                   className="w-full border border-[#EDE9E9] bg-[#FFFFFF] h-10 rounded-full w-full pl-6 placeholder:text-md placeholder:font-normal dark:bg-[#111827] dark:border-[#000450] outline-none"
-                  {...register("password", { required: "Password is required" })}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                 />
                 {errors.password && (
                   <p className="text-red-500 dark:text-red-200 text-sm">
@@ -142,7 +144,12 @@ const Auth = () => {
             </p>
             <p className="font-medium">
               {signIn === false ? "Don't" : "Already"} have an account?
-              <button className="text-blue-600 dark:text-blue-200" onClick={()=>{setSignIn(signIn === false ? true : false)}}>
+              <button
+                className="text-blue-600 dark:text-blue-200 ml-1"
+                onClick={() => {
+                  setSignIn(signIn === false ? true : false);
+                }}
+              >
                 {signIn === true ? "Login" : "Sign up"}
               </button>
             </p>

@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import LightProvider, { LightContext } from "./context/LightToggle";
 import Auth from "./pages/Auth";
 import AuthProvider from "./context/AuthProvider";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (

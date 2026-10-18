@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import toaster from 'react-hot-toast'
+import toaster from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
@@ -21,25 +21,27 @@ const AuthProvider = ({ children }) => {
     };
     const nextUsers = [...users, user];
     setUsers(nextUsers);
-    localStorage.setItem('user', user);
+    localStorage.setItem("user", user);
     localStorage.setItem("users", JSON.stringify(users));
-    toaster.success(`Hello, ${user.email} `)
+    toaster.success(`Hello, ${user.email} `);
   }
 
   function login(email, password) {
-  const user = users.find(
-    (user) => user.email === email && user.password === password
-  );
+    const user = users.find(
+      (user) => user.email === email && user.password === password,
+    );
 
-  if (!user) {
-    alert(users.length === 0 ? "No accounts yet!" : "Wrong username or password!");
-    toaster.error("No accounts yet!")
-    return;
+    if (!user) {
+      alert(
+        users.length === 0 ? "No accounts yet!" : "Wrong username or password!",
+      );
+      toaster.error("No accounts yet!");
+      return;
+    }
+
+    setCurrentUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
   }
-
-  setCurrentUser(user);
-  localStorage.setItem("user", JSON.stringify(user));
-}
   return (
     <AuthContext.Provider value={{ signUp, login }}>
       {children}
