@@ -57,7 +57,7 @@ const Auth = () => {
   return (
     <main className="w-full h-full flex justify-center items-center flex-col gap-6">
         <h1 className="font-bold text-3xl sm:text-4xl md:text-4.2xl">{headers[Math.floor(Math.random() * headers.length)]}</h1>
-        <section className=" scale-80 sm:scale-120 md:scale-140 lg:scale-100 bg-[#F3F3F3] flex justify-center items-center flex-col h-120 w-120 rounded-3xl relative dark:bg-[#09090B]">
+        <section className=" scale-70 sm:scale-70 md:scale-90 lg:scale-100 bg-[#F3F3F3] flex justify-center items-center flex-col h-120 w-120 rounded-3xl relative dark:bg-[#09090B]">
             <h2 className="text-2xl sm:text-3xl font-semibold absolute top-2 mt-5">Login</h2>
             <section className="w-full flex justify-start items-center flex-col gap-10 mt-12">
                 <form className="flex justify-center items-center flex-col w-[100%] gap-10">
