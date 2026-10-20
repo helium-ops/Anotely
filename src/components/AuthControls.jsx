@@ -73,6 +73,8 @@ const AuthControls = () => {
     } else {
       login(email, password);
     }
+
+    navigate("/")
   }
   return (<>
     <h1 className="font-bold text-3xl sm:text-4xl md:text-4.2xl">
