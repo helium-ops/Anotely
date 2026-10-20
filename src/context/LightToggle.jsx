@@ -10,7 +10,8 @@ const LightProvider = ({ children }) => {
   useEffect(()=>{
     if(!darkToggle){
       setDarkToggle(false);
-    } else {
+    }
+    else {
       setDarkToggle(true);
     }
     localStorage.setItem('theme', darkToggle)

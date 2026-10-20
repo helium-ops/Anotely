@@ -19,10 +19,11 @@ const AuthProvider = ({ children }) => {
       subjects: [],
       quizzes: [],
     };
-    const nextUsers = [...users, user];
-    setUsers(nextUsers);
-    localStorage.setItem("user", user);
-    localStorage.setItem("users", JSON.stringify(users));
+    const newUsers = [...users, user];
+    setUsers(newUsers);
+    localStorage.setItem("users", JSON.stringify(newUsers));
+    localStorage.setItem("user", JSON.stringify(user));
+    
     toaster.success(`Hello, ${user.email} `);
   }
 
@@ -32,9 +33,6 @@ const AuthProvider = ({ children }) => {
     );
 
     if (!user) {
-      alert(
-        users.length === 0 ? "No accounts yet!" : "Wrong username or password!",
-      );
       toaster.error("No accounts yet!");
       return;
     }
@@ -42,6 +40,8 @@ const AuthProvider = ({ children }) => {
     setCurrentUser(user);
     localStorage.setItem("user", JSON.stringify(user));
   }
+
+
   return (
     <AuthContext.Provider value={{ signUp, login }}>
       {children}
