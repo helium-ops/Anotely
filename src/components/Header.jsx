@@ -17,7 +17,7 @@ export default function Header({user}) {
         className="h-16 sm:h-18 md:h-20 lg:h-19"
       />
       <section className="flex justify-center items-center gap-3">
-        {user != null && <button className="btn h-10 w-25 rounded-[0.3vw] font-semibold" onClick={logout()}>Logout</button>}
+        {user != null && <button className="btn h-10 w-25 rounded-[0.3vw] font-semibold" onClick={logout}>Logout</button>}
         <button className="h-10 w-10 btn rounded-full text-center" onClick={addDarkMode}><FontAwesomeIcon icon={darkToggle ? faSun : faMoon} /></button>
       </section>
     </header>

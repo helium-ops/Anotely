@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-import toaster from "react-hot-toast";
+import React, { createContext, useState } from "react";
+import toast  from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
@@ -10,7 +10,19 @@ const AuthProvider = ({ children }) => {
       : [],
   );
 
-  const [currentUser, setCurrentUser] = useState(null);
+   const [user, setUser] = useState(()=>{
+      try{
+      return JSON.stringify(localStorage.getItem('user'));
+      }
+      catch(error){
+        return null;
+      }
+    })
+
+    const [loggedIn, setLoggedIn] = useState(()=>{
+      return localStorage.getItem('user') ? true : false;
+    })
+
   function signUp(email, password) {
     const user = {
       email,
@@ -25,6 +37,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(user));
     
     toaster.success(`Hello, ${user.email} `);
+    setLoggedIn(true);
   }
 
   function login(email, password) {
@@ -37,17 +50,19 @@ const AuthProvider = ({ children }) => {
       return;
     }
 
-    setCurrentUser(user);
+    setUser(user);
     localStorage.setItem("user", JSON.stringify(user));
+    toast("Refresh the page!")
   }
 
   function logout(){
-    localStorage.removeItem("user");
+    setUser(null);
+    localStorage.removeItem('user');
   }
 
 
   return (
-    <AuthContext.Provider value={{ signUp, login, logout }}>
+    <AuthContext.Provider value={{ signUp, login, logout, loggedIn, user }}>
       {children}
     </AuthContext.Provider>
   );

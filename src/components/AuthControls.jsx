@@ -70,11 +70,10 @@ const AuthControls = () => {
     const { email, password } = data;
     if (signIn === true) {
       signUp(email, password);
+      navigate("/");
     } else {
-      login(email, password);
+      if (login(email, password)) navigate("/");
     }
-
-    navigate("/")
   }
   return (<>
     <h1 className="font-bold text-3xl sm:text-4xl md:text-4.2xl">
