@@ -33,7 +33,7 @@ const NavBar = () => {
         </div>
         <button className='btn font-semibold h-10 w-30 text-[1.1vw] rounded-[0.7vw] sm:rounded-[0.5vw] md:rounded-[0.3vw]'>{user.subjects.length === 0 ? "First Subject" : "See all subjects"}</button>
       </section>
-      <h3 className='text-[10px] sm:text-[13px]' >{user.email}</h3>
+      <h3 className='text-[10px] sm:text-[13px] font-semibold mr-4' >{user.email}</h3>
     </aside>
   )
 }
