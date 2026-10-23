@@ -4,18 +4,10 @@ export const LightContext = createContext(null);
 
 const LightProvider = ({ children }) => {
   const [darkToggle, setDarkToggle] = useState(
-    JSON.parse(localStorage.getItem("theme") ?? false)
+    JSON.parse(localStorage.getItem("theme") ? localStorage.getItem("theme") : "false")
   );
 
-  useEffect(()=>{
-    if(!darkToggle){
-      setDarkToggle(false);
-    }
-    else {
-      setDarkToggle(true);
-    }
-    localStorage.setItem('theme', darkToggle)
-  }, [darkToggle])
+  
 
   function addDarkMode() {
     setDarkToggle((prev) => !prev);

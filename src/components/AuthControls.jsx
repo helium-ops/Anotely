@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const AuthControls = () => {
     const {
     register,
@@ -11,7 +11,7 @@ const AuthControls = () => {
   const { signUp, login } = useContext(AuthContext);
 
   const [signIn, setSignIn] = useState(false);
-  const navigate = useNavigate();
+  
 
   const headers = [
     "Welcome Back",
@@ -139,9 +139,9 @@ const AuthControls = () => {
           <section className="flex justify-center items-center flex-col gap-1">
             <p className="font-medium">
               Forgot password?{" "}
-              <a href="" className="text-blue-600 dark:text-blue-200" onClick={()=>navigate("/changePassword")}>
+              <Link to="/changePassword" className="text-blue-600 dark:text-blue-200">
                 Reset password
-              </a>
+              </Link>
             </p>
             <p className="font-medium">
               {signIn === false ? "Don't" : "Already"} have an account?
