@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 const AuthControls = () => {
     const {
@@ -8,7 +8,7 @@ const AuthControls = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signUp, login } = useContext(AuthContext);
+  const { signUp, login } = useAuth();
 
   const [signIn, setSignIn] = useState(false);
   

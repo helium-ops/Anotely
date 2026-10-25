@@ -4,10 +4,10 @@ import image_lightMode from "../assets/Light mode.png";
 import { LightContext } from "../context/LightToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 
 export default function Header() {
-  const { logout, currentUser } = useContext(AuthContext);
+  const { logout, currentUser } = useAuth();
   const { addDarkMode, darkToggle } = useContext(LightContext);
   return (
     <header className="flex justify-between items-center w-full h-20 pr-5 dark:border-gray-700 border-b border-b-gray-200">

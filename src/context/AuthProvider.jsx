@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import toaster from "react-hot-toast";
 
 const AuthContext = createContext(null);
@@ -93,7 +93,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, login, logout, currentUser }}>
+    <AuthContext.Provider value={{ signUp, login, logout, currentUser, setCurrentUser, users }}>
       {children}
     </AuthContext.Provider>
   );
@@ -101,4 +101,6 @@ const AuthProvider = ({ children }) => {
 
 export default AuthProvider;
 
-export { AuthContext };
+export function useAuth(){
+  return useContext(AuthContext);
+}
