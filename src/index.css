@@ -10,6 +10,6 @@
     @apply font-bold text-xl sm:text-2xl md:text-2xl;
   }
   .subHeader{
-    @apply font-semibold text-gray-400 dark:text-gray-700
+    @apply font-medium text-gray-400 dark:text-gray-700
   }
 }
