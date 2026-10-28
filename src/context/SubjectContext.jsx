@@ -4,7 +4,7 @@ import { useAuth } from "./AuthProvider";
 export const SubjectContext = createContext(null);
 const SubjectProvider = ({ children }) => {
   const { currentUser, setCurrentUser, users } = useAuth();
-   function makeSubject() {
+  function makeSubject() {
     const updatedUser = {
       ...currentUser,
       subjects: [
@@ -15,10 +15,10 @@ const SubjectProvider = ({ children }) => {
           topics: [],
         },
       ],
-    }
-     setCurrentUser(updatedUser);
-     localStorage.setItem("user", JSON.stringify(currentUser));
-     localStorage.setItem("users", JSON.stringify(updatedUser));
+    };
+    setCurrentUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    localStorage.setItem("users", JSON.stringify(updatedUser));
   }
 
   function editSubjectName(id, name) {
@@ -34,13 +34,16 @@ const SubjectProvider = ({ children }) => {
       pages: currentUser.pages.filter((page) => page.id != id),
     });
   }
+
   localStorage.setItem("users", JSON.stringify(users));
   localStorage.setItem("user", JSON.stringify(currentUser));
   return (
-<SubjectContext.Provider value={{ makeSubject, editSubjectName, deleteSubject }}>
-  {children}
-</SubjectContext.Provider>);
+    <SubjectContext.Provider
+      value={{ makeSubject, editSubjectName, deleteSubject }}
+    >
+      {children}
+    </SubjectContext.Provider>
+  );
 };
-
 
 export default SubjectProvider;
