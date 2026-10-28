@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
     );
 
     if (!user) {
-      toaster.error("No accounts yet!");
+      toaster.error("Wrong Username or Password!");
       return false;
     }
 

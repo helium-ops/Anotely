@@ -9,14 +9,17 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AuthControls from "./components/AuthControls";
 import ResetPassword from "./components/ResetPassword";
+import Dashboard from "./components/Dashboard";
+import Subject from "./pages/Subject";
 
 function Container() {
   const { currentUser } = useAuth();
+  const [open, setOpen] = useState(false);
   return (
     <main
-      className={`flex justify-start items-center h-full flex-col dark:bg-black dark:text-white`}
+      className="flex h-screen min-h-0 flex-col justify-start dark:bg-black dark:text-white"
     >
-      <Header user={currentUser} />
+      <Header user={currentUser} open={open} setOpen={setOpen} />
       <Routes>
         {currentUser === null ? (
           <Route path="/" element={<Auth />}>
@@ -24,7 +27,12 @@ function Container() {
             <Route path="changePassword" element={<ResetPassword />} />
           </Route>
         ) : (
-          <Route path="/" element={<Home />} />
+          <Route path="/*" element={<Home open={open} />} >
+            <Route index element={<Dashboard/>}/>
+            {currentUser.subjects.map((subject)=>(
+              <Route path=":id" element={<Subject subject={subject}/>}/>
+            ))}
+          </Route>
         )}
         <Route path="/" element={<Navigate to="/" replace />} />
       </Routes>

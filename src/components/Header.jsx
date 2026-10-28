@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../context/AuthProvider";
 
-export default function Header() {
+export default function Header({open, setOpen}) {
   const { logout, currentUser } = useAuth();
   const { addDarkMode, darkToggle } = useContext(LightContext);
   return (
-    <header className="flex justify-between items-center w-full h-20 pr-5 dark:border-gray-700 border-b border-b-gray-200">
+    <header className="flex h-20 w-full shrink-0 items-center justify-between border-b border-b-gray-200 pr-5 dark:border-gray-700">
       <img
         src={darkToggle ? image_darkMode : image_lightMode}
         alt=""
