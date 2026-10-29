@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Link } from "react-router-dom"
 import { useAuth } from '../context/AuthProvider'
 import { SubjectContext } from '../context/SubjectContext'
 import { Timer } from 'lucide-react';
@@ -56,6 +57,30 @@ function NewPerson({currentUser, makeSubject}){
         
   )
 }
+
+function OldDashboard({currentUser}){
+   return(
+    <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
+    <header className='flex justify-start items-start flex-col gap-2'>
+      <h1 className='header'>Another day, another chance for productivity</h1>
+      <h3 className='subHeader'>Finish up your remaining work</h3>
+    </header>
+    <section className='flex justify-center items-center w-[85%]'>
+      {currentUser.subjects.length <= 5 ? 
+      currentUser.subjects.map((subject)=>(
+        <section className='flex justify-start items-start flex-col gap-8 bg-[#F3F3F3] dark:bg-[#09090B] h-42 w-50 p-5 rounded-xl'>
+          <div className='flex justify-center items-start flex-col gap-1'>
+            <h1 className='header'>{subject.name}</h1>
+            <h3 className='subHeader'>{subject.topics.length === 1 ? subject.topics[0].name : subject.topics.length === 0 ? "No topics yet!" : `${subject.topics.length} topics`}</h3>
+          </div>
+          <Link to={`/${subject.id}`} className='btn py-2 px-4 rounded-[0.5vh] font-semibold text-center'> See full subject</Link>
+        </section>
+      )) : "s" }
+    </section>
+    
+    </section>
+   )
+}
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const { makeSubject } = useContext(SubjectContext);
@@ -63,7 +88,7 @@ const Dashboard = () => {
   return currentUser.subjects.length === 0 ? (
         <NewPerson currentUser={currentUser} makeSubject={makeSubject}/>
   ) : (
-    <h3></h3>
+    <OldDashboard currentUser={currentUser}/>
   )
   
 }
