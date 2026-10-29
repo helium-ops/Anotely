@@ -5,11 +5,9 @@ import { Timer } from 'lucide-react';
 import subjectIcon from "../assets/subjectIcon.png";
 import helpCircle from "../assets/Help-circle.png"
 
-const Dashboard = () => {
-  const { currentUser } = useAuth();
-  const { makeSubject } = useContext(SubjectContext);
-  
-  return currentUser.subjects.length === 0 ? (
+
+function NewPerson({currentUser, makeSubject}){
+ return  (
     <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
         <header>
             <h1 className='header break-words'>Welcome to Anotely, {currentUser.email}</h1>
@@ -56,6 +54,14 @@ const Dashboard = () => {
           </section>
         </section>
         
+  )
+}
+const Dashboard = () => {
+  const { currentUser } = useAuth();
+  const { makeSubject } = useContext(SubjectContext);
+  
+  return currentUser.subjects.length === 0 ? (
+        <NewPerson currentUser={currentUser} makeSubject={makeSubject}/>
   ) : (
     <h3></h3>
   )
