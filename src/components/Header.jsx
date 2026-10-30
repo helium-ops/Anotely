@@ -12,7 +12,7 @@ export default function Header({open, setOpen}) {
   return (
     <header className="flex h-20 w-full shrink-0 items-center justify-between border-b border-b-gray-200 pr-5 dark:border-gray-700">
       <img
-        src={darkToggle ? image_darkMode : image_lightMode}
+        src={darkToggle != false ? image_darkMode : image_lightMode}
         alt=""
         className="h-16 sm:h-18 md:h-20 lg:h-19"
       />
