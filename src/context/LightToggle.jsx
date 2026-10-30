@@ -4,7 +4,7 @@ export const LightContext = createContext(null);
 
 const LightProvider = ({ children }) => {
   const [darkToggle, setDarkToggle] = useState(
-    localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme")) : "false"
+    localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme")) : false
   );
 
   
