@@ -10,7 +10,7 @@ export default function Header({open, setOpen}) {
   const { logout, currentUser } = useAuth();
   const { addDarkMode, darkToggle } = useContext(LightContext);
   return (
-    <header className="flex h-20 w-full shrink-0 items-center justify-between border-b border-b-gray-200 pr-5 dark:border-gray-700">
+    <header className="flex h-22 w-full shrink-0 items-center justify-between border-b border-b-gray-200 pr-5 px-2 dark:border-gray-700">
       <img
         src={darkToggle != false ? image_darkMode : image_lightMode}
         alt=""

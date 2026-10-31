@@ -8,6 +8,7 @@ import helpCircle from "../assets/Help-circle.png"
 
 
 function NewPerson({currentUser, makeSubject}){
+  const timer = currentUser.timers;
  return  (
     <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
         <header>
@@ -59,13 +60,15 @@ function NewPerson({currentUser, makeSubject}){
 }
 
 function OldDashboard({currentUser}){
+   const timer = currentUser.timers?.sort((timer)=> timer.duration <= timer.duration)[0];
    return(
-    <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
+    <section className='flex min-w-0 flex-1 flex-col items-start gap-6 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
     <header className='flex justify-start items-start flex-col gap-2'>
       <h1 className='header'>Another day, another chance for productivity</h1>
       <h3 className='subHeader'>Finish up your remaining work</h3>
     </header>
-    <section className='flex justify-center items-center w-[85%]'>
+    <section className='flex justify-center items-center flex-col gap-3 w-full flex-wrap scale-80 sm:scale-90 md:scale-100 px-3'>
+      <section>
       {currentUser.subjects.length <= 5 ? 
       currentUser.subjects.map((subject)=>(
         <section className='flex justify-start items-start flex-col gap-8 bg-[#F3F3F3] dark:bg-[#09090B] h-42 w-50 p-5 rounded-xl'>
@@ -76,11 +79,32 @@ function OldDashboard({currentUser}){
           <Link to={`/${subject.id}`} className='btn py-2 px-4 rounded-[0.5vh] font-semibold text-center'> See full subject</Link>
         </section>
       )) : "s" }
+      </section>
+      <button className='btn h-12 w-40 rounded-[0.5vh] scale-90 font-semibold'>See all Subjects</button>
     </section>
-    
+    <section className='-mt-3 flex w-full flex-col items-center justify-center md:flex-row scale-60 sm:-mt-9 md:-mt-11 lg:-mt-15 xl:-mt-22 gap-10'>
+        <section className='bg-[#F3F3F3] dark:bg-[#09090B] flex min-h-[15rem] w-full max-w-[36rem] flex-col items-start justify-start gap-8 rounded-lg px-5 py-8 text-left'>
+          <div className='flex w-full flex-col items-start justify-start gap-3 text-left scale-110'>
+            <h1 className="header w-full break-words text-left text-3xl ml-5">{timer ? `Only 1 minute left for ${timer.name}` : "Make your first session!"}</h1>
+            <h3 className="subHeader w-full text-left text-xl font-semibold ml-5">{timer ? `Make it 0!` : 'Stay focused and make every second count'}</h3>
+          </div>
+          <button className='btn h-18 w-48 self-start rounded-lg text-2xl font-semibold'>{timer ? `Finish up` : 'First timer'}</button>
+        </section>
+        <section className='btn flex min-h-[15rem] w-full max-w-[36rem] flex-col items-start justify-start gap-8 rounded-lg px-5 py-8 text-left'>
+          <div className='scale-150 flex justify-start items-start flex-col gap-2'>
+            <h1 className="header ml-12">
+              Finish your Math quiz!
+            </h1>
+            <h2 className="subHeader ml-12">
+              Only 3 questions left!
+            </h2>
+          </div>
+          <button className='bg-white dark:bg-black text-black dark:text-white h-12 w-30 scale-130 ml-5 mt-8 font-semibold rounded-[0.6vh]'>Finish up</button>
+        </section>
+        </section>
+         
     </section>
-   )
-}
+   )}
 const Dashboard = () => {
   const { currentUser } = useAuth();
   const { makeSubject } = useContext(SubjectContext);

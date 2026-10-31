@@ -10,7 +10,8 @@ import Home from "./pages/Home";
 import AuthControls from "./components/AuthControls";
 import ResetPassword from "./components/ResetPassword";
 import Dashboard from "./components/Dashboard";
-import Subject from "./pages/Subject";
+import Subject from "./components/Subject";
+import FullSubjects from "./components/FullSubjects";
 
 function Container() {
   const { currentUser } = useAuth();
@@ -32,6 +33,7 @@ function Container() {
             {currentUser.subjects.map((subject)=>(
               <Route path=":id" element={<Subject subject={subject}/>}/>
             ))}
+            <Route path="subjects" element={<FullSubjects/>}/>
           </Route>
         )}
         <Route path="/" element={<Navigate to="/" replace />} />

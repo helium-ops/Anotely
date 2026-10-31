@@ -2,12 +2,12 @@
 import { useContext } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { SubjectContext } from "../context/SubjectContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const { currentUser } = useAuth();
   const { makeSubject } = useContext(SubjectContext);
-
+  const navigate = useNavigate();
 
   return (
     <aside className="hidden w-full shrink-0 flex-row gap-6 overflow-x-auto border-b border-gray-200 bg-gray-500 px-4 py-3 dark:border-gray-700 md:bg-transparent lg:flex lg:w-56 lg:flex-col lg:items-start lg:justify-around lg:gap-3 lg:overflow-y-auto lg:overflow-x-hidden lg:border-b-0 lg:border-r lg:px-4 lg:py-5">
@@ -41,7 +41,7 @@ const NavBar = () => {
             if (currentUser.subjects.length === 0) {
               makeSubject();
             } else {
-              // TODO: Navigate to the page showing all subjects.
+              navigate('/subjects')
             }
           }}
         >

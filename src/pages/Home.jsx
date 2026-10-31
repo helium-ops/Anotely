@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import NavBar from '../components/NavBar'
 import Dashboard from '../components/Dashboard';
 import { useAuth } from '../context/AuthProvider';
-import Subject from './Subject';
+import Subject from '../components/Subject';
 
 export default function Home(){
   const { currentUser } = useAuth();
