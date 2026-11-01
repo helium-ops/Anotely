@@ -1,19 +1,20 @@
 import React, { useContext } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from '../context/AuthProvider'
 import { SubjectContext } from '../context/SubjectContext'
 import { Timer } from 'lucide-react';
 import subjectIcon from "../assets/subjectIcon.png";
 import helpCircle from "../assets/Help-circle.png"
 
-
 function NewPerson({currentUser, makeSubject}){
   const timer = currentUser.timers;
+  
+const navigate = useNavigate();
  return  (
     <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
-        <header>
+        <header className=''>
             <h1 className='header break-words'>Welcome to Anotely, {currentUser.email}</h1>
-            <h2 className='subHeader'>Get started with the platform</h2>
+            <h2 className='subHeader mt-1'>Get started with the platform</h2>
         </header>
         <section className='flex flex-col items-start gap-5'>
           <div className='flex flex-col gap-2'>
@@ -60,6 +61,8 @@ function NewPerson({currentUser, makeSubject}){
 }
 
 function OldDashboard({currentUser}){
+
+const navigate = useNavigate();
    const timer = currentUser.timers?.sort((timer)=> timer.duration <= timer.duration)[0];
    return(
     <section className='flex min-w-0 flex-1 flex-col items-start gap-6 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
@@ -80,7 +83,7 @@ function OldDashboard({currentUser}){
         </section>
       )) : "s" }
       </section>
-      <button className='btn h-12 w-40 rounded-[0.5vh] scale-90 font-semibold'>See all Subjects</button>
+      <button className='btn h-12 w-40 rounded-[0.5vh] scale-90 font-semibold' onClick={()=>navigate('subjects')}>See all Subjects</button>
     </section>
     <section className='-mt-3 flex w-full flex-col items-center justify-center md:flex-row scale-60 sm:-mt-9 md:-mt-11 lg:-mt-15 xl:-mt-22 gap-10'>
         <section className='bg-[#F3F3F3] dark:bg-[#09090B] flex min-h-[15rem] w-full max-w-[36rem] flex-col items-start justify-start gap-8 rounded-lg px-5 py-8 text-left'>

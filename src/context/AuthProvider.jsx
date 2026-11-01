@@ -42,9 +42,28 @@ function getStoredUser() {
       return user;
     }
 
-    console.error("Stored user must be an object or null.");
+    if (typeof user === "string") {
+      const matchingUser = getStoredUsers().find(
+        (candidate) => candidate.email === user,
+      );
+      if (matchingUser) {
+        return matchingUser;
+      }
+
+      console.error("Stored user email does not match a stored user.");
+      return null;
+    }
+
+    console.error("Stored user must be an object, email, or null.");
   } catch (error) {
-    console.error("Could not parse stored user.", error);
+    const matchingUser = getStoredUsers().find(
+      (candidate) => candidate.email === storedUser,
+    );
+    if (matchingUser) {
+      return matchingUser;
+    }
+
+    console.error("Could not parse stored user or find its email.", error);
   }
 
   return null;
@@ -67,7 +86,7 @@ const AuthProvider = ({ children }) => {
     setCurrentUser(user);
     setUsers(newUsers);
     localStorage.setItem("users", JSON.stringify(newUsers));
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", user.email);
     toaster.success(`Hello, ${user.email}`);
   }
 
@@ -82,7 +101,7 @@ const AuthProvider = ({ children }) => {
     }
 
     setCurrentUser(user);
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", user.email);
     toaster.success(`Hello, ${user.email}`);
     return true;
   }
@@ -93,7 +112,17 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, login, logout, currentUser, setCurrentUser, users }}>
+    <AuthContext.Provider
+      value={{
+        signUp,
+        login,
+        logout,
+        currentUser,
+        setCurrentUser,
+        users,
+        setUsers,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -3,7 +3,7 @@ import { useAuth } from "./AuthProvider";
 
 export const SubjectContext = createContext(null);
 const SubjectProvider = ({ children }) => {
-  const { currentUser, setCurrentUser, users } = useAuth();
+  const { currentUser, setCurrentUser, users, setUsers } = useAuth();
   function makeSubject() {
     const updatedUser = {
       ...currentUser,
@@ -16,27 +16,50 @@ const SubjectProvider = ({ children }) => {
         },
       ],
     };
+    const updatedUsers = users.map((user) =>
+      user.email === updatedUser.email ? updatedUser : user,
+    );
     setCurrentUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(currentUser));
-    localStorage.setItem("users", JSON.stringify(updatedUser));
+    setUsers(updatedUsers);
+    localStorage.setItem("user", updatedUser.email);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   }
 
   function editSubjectName(id, name) {
-    const page = currentUser.subjects.find((page) => page.id === id);
-    page.name = name;
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("user", JSON.stringify(currentUser));
+    const updatedUser = {
+      ...currentUser,
+      subjects: currentUser.subjects.map((subject) =>
+        subject.id === id ? { ...subject, name } : subject,
+      ),
+    };
+    const updatedUsers = users.map((user) =>
+      user.email === updatedUser.email ? updatedUser : user,
+    );
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    localStorage.setItem("user", updatedUser.email);
   }
 
   function deleteSubject(id) {
-    setCurrentUser({
+    if (!users || !currentUser) {
+      return;
+    }
+
+    const updatedUser = {
       ...currentUser,
-      pages: currentUser.pages.filter((page) => page.id != id),
-    });
+      subjects: currentUser.subjects.filter((subject) => subject.id !== id),
+    };
+    const updatedUsers = users.map((user) =>
+      user.email === updatedUser.email ? updatedUser : user,
+    );
+
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers);
+    localStorage.setItem("user", updatedUser.email);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   }
 
-  localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("user", JSON.stringify(currentUser));
   return (
     <SubjectContext.Provider
       value={{ makeSubject, editSubjectName, deleteSubject }}

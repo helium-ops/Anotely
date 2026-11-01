@@ -36,7 +36,7 @@ const NavBar = () => {
 
         <button
           type="button"
-          className="btn h-10 w-33 rounded font-semibold"
+          className="btn h-11 w-35 rounded font-semibold"
           onClick={() => {
             if (currentUser.subjects.length === 0) {
               makeSubject();
