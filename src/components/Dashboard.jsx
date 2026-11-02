@@ -11,7 +11,7 @@ function NewPerson({currentUser, makeSubject}){
   
 const navigate = useNavigate();
  return  (
-    <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-10 sm:p-6 lg:p-8'>
+    <section className='flex min-w-0 flex-1 flex-col items-start gap-8 overflow-y-auto p-4 sm:gap-9 sm:p-6 lg:p-8'>
         <header className=''>
             <h1 className='header break-words'>Welcome to Anotely, {currentUser.email}</h1>
             <h2 className='subHeader mt-1'>Get started with the platform</h2>
@@ -71,7 +71,7 @@ const navigate = useNavigate();
       <h3 className='subHeader'>Finish up your remaining work</h3>
     </header>
     <section className='flex justify-center items-center flex-col gap-3 w-full flex-wrap scale-80 sm:scale-90 md:scale-100 px-3'>
-      <section>
+      <section className='flex justify-center items-center gap-4 flex-wrap'>
       {currentUser.subjects.length <= 5 ? 
       currentUser.subjects.map((subject)=>(
         <section className='flex justify-start items-start flex-col gap-8 bg-[#F3F3F3] dark:bg-[#09090B] h-42 w-50 p-5 rounded-xl'>
@@ -81,7 +81,13 @@ const navigate = useNavigate();
           </div>
           <Link to={`/${subject.id}`} className='btn py-2 px-4 rounded-[0.5vh] font-semibold text-center'> See full subject</Link>
         </section>
-      )) : "s" }
+      )) : (<section className='flex justify-start items-start flex-col gap-8 bg-[#F3F3F3] dark:bg-[#09090B] h-42 w-50 p-5 rounded-xl'>
+        <div className='flex justify-center items-start flex-col gap-1'>
+          <h1 className="header">{currentUser.subjects[0].name}</h1>
+          <h3 className="subHeader">{currentUser.subjects[0].topics.length === 1 ? currentUser.subjects[0].topics[0].name : currentUser.subjects[0].topics.length === 0 ? "No topics yet!" : `${currentUser.subjects[0].topics.length} topics`}</h3>
+        </div>
+        <Link to={`/${currentUser.subjects[0].id}`} className='btn py-2 px-4 rounded-[0.5vh] font-semibold text-center'> See full subject</Link>
+      </section>) }
       </section>
       <button className='btn h-12 w-40 rounded-[0.5vh] scale-90 font-semibold' onClick={()=>navigate('subjects')}>See all Subjects</button>
     </section>

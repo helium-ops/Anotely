@@ -33,6 +33,7 @@ function Container() {
             {currentUser.subjects.map((subject)=>(
               <Route path=":id" element={<Subject subject={subject}/>}/>
             ))}
+            
             <Route path="subjects" element={<FullSubjects/>}/>
           </Route>
         )}
