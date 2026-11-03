@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer components{
+    .btn{
+        @apply bg-blue-400 dark:bg-blue-600 
+    }
+}
