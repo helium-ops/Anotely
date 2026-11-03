@@ -4,6 +4,6 @@
 
 @layer components{
     .btn{
-        @apply bg-blue-400 dark:bg-blue-600 
+        @apply bg-blue-500 dark:bg-blue-600 hover:opacity-80
     }
 }

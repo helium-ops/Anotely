@@ -16,7 +16,7 @@ const Theme = ({theme, setTheme}) => {
     localStorage.setItem('theme', JSON.stringify(newTheme));
   }
   return (
-    <button onClick={changeTheme} className="h-10 w-10 bg-blue-500 flex justify-center items-center rounded-full scale-120 hover:bg-blue-600 transition-colors"><span className='text-white'>{theme === 'dark' ? (<Moon size={22}/>) : (<Sun size={22}/>)}</span></button>
+    <button onClick={changeTheme} className="h-10 w-10 btn flex justify-center items-center rounded-full scale-120"><span className='text-white'>{theme === 'dark' ? (<Moon size={22}/>) : (<Sun size={22}/>)}</span></button>
   )
 }
 
