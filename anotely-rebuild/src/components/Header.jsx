@@ -14,11 +14,11 @@ const Header = ({theme, setTheme}) => {
     }})
   },[theme, setTheme])
   return (
-    <header className='flex justify-between items-center w-full h-17 sm:h-18 md:h-21 lg:h-23 border-b border-gray-200'>
+    <header className='flex justify-between items-center w-full h-17 sm:h-18 md:h-21 lg:h-23 border-b border-gray-200 dark:border-gray-700'>
         <div>
-     <img src={theme === 'dark' ? lightMode : darkMode} alt="Logo" className='h-15 sm:h-16 md:h-17 lg:h-18 xl:h-20'/>
+     <img src={theme === 'dark' ? lightMode : darkMode} alt="Logo" className='h-15 sm:h-16 md:h-17 lg:h-18 xl:h-19'/>
      </div>
-      <section className='flex justify-center items-center gap-1 mr-9'>
+      <section className='flex justify-center items-center gap-1 mr-4 sm:mr-5 md:mr-6 lg:mr-8 scale-80 sm:scale-90 md:scale-100'>
         <Theme theme={theme} setTheme={setTheme}/>
       </section>
     </header>
