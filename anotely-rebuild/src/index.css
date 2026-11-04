@@ -6,4 +6,7 @@
     .btn{
         @apply bg-blue-500 dark:bg-blue-600 hover:opacity-80
     }
+    .surface{
+        @apply bg-[#F3F3F3] dark:bg-[#111827]
+    }
 }
