@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { useForm } from "react-hook-form";
+import { useAuth } from '../context/AuthProvider';
 
 const AuthControls = () => {
+  const { signUp } = useAuth();
+  const {register, handleSubmit, formState: errors} = useForm();
   const [quotes, setQuotes] = useState([
   "Every great journey starts here.",
   "Your next chapter starts today.",
@@ -23,30 +27,41 @@ const AuthControls = () => {
   "Believe in your progress.",
   "Your journey, your growth."
 ]);
+const [authMethod, setAuthMethod] = useState('login');
 const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
+function onSubmit(data){
+    if(authMethod === 'login'){
+      alert('Welcome!');
+    } else {
+      signUp(data.email, data.password);
+    }
+}
+
 return (
-  <section className="min-h-screen w-full flex flex-col justify-center items-center gap-5 p-4">
+  <section className="min-h-screen w-full flex flex-col justify-center items-center gap-5 p-4 lg:pb-8">
     <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
       {randomQuote}
     </h1>
 
     <section className="surface rounded-2xl min-h-80 w-full max-w-80 sm:max-w-100 md:max-w-110 p-6 flex flex-col justify-between gap-6">
       <h2 className="text-2xl sm:text-3xl font-bold text-center">
-        Login
+        {authMethod === 'login' ? "Login" : 'Sign up'}
       </h2>
 
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
+            {...register('email', {required: "Email is required"})}
             placeholder="name@example.com"
             className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800"
             required
           />
+          {errors.email && <p className='text-red'>{errors.email.message}</p>}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -55,6 +70,7 @@ return (
             type="password"
             id="password"
             name="password"
+            {...register('password', {required: "Password is required"})}
             placeholder="••••••••"
             className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800"
             required
@@ -65,7 +81,7 @@ return (
           type="submit"
           className="w-full rounded-lg bg-blue-600 p-3 font-semibold text-white hover:bg-blue-700 transition-colors"
         >
-          Login
+          {authMethod === 'login' ? 'Login': 'Sign up'}
         </button>
       </form>
 
@@ -78,10 +94,10 @@ return (
         </p>
 
         <p>
-          Don't have an account?{" "}
-          <a href="/signup" className="text-blue-600 hover:underline">
-            Sign up
-          </a>
+          { authMethod === 'login' ? "Don't have an account?" : 'Already have an account?'}
+          <button className="text-blue-600 hover:underline ml-1" onClick={()=>{setAuthMethod(authMethod === 'login' ? 'signUp' : 'login');}}>
+            {authMethod === 'login' ? 'Sign up': 'Login'}
+          </button>
         </p>
       </section>
     </section>
