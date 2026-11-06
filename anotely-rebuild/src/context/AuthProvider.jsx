@@ -43,12 +43,26 @@ const AuthProvider = ({ children }) => {
     
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
+    toast.success(`Welcome to Anotely, ${newUser.email}`)
     localStorage.setItem("user", JSON.stringify(newUser.email));
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-   
+  }
+  function login(email, password){
+    if(users.length === 0){
+      toast.error('No users yet!');
+      return;
+    }
+    const intendedUser = users.find((user)=> user.email === email || user.password === password);
+    if(email != intendedUser.email || intendedUser.password != password){
+      toast.error("Wrong email or password!");
+      return;
+  }
+  setCurrentUser(intendedUser);
+  toast.success(`Welcome back, ${currentUser.email}`)
+  localStorage.setItem('user', JSON.stringify(intendedUser.email))
   }
   return (
-    <AuthContext.Provider value={{ users, setUsers, signUp }}>
+    <AuthContext.Provider value={{ users, setUsers, signUp, login }}>
       {children}
     </AuthContext.Provider>
   );

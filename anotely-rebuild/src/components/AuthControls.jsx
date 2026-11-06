@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from '../context/AuthProvider';
 
 const AuthControls = () => {
-  const { signUp } = useAuth();
+  const { signUp, login } = useAuth();
   const {register, handleSubmit, formState: errors} = useForm();
   const [quotes, setQuotes] = useState([
   "Every great journey starts here.",
@@ -32,7 +32,7 @@ const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
 function onSubmit(data){
     if(authMethod === 'login'){
-      alert('Welcome!');
+      login(data.email, data.password)
     } else {
       signUp(data.email, data.password);
     }
