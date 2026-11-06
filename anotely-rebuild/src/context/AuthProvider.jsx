@@ -61,6 +61,11 @@ const AuthProvider = ({ children }) => {
   toast.success(`Welcome back, ${currentUser.email}`)
   localStorage.setItem('user', JSON.stringify(intendedUser.email))
   }
+
+  function logout(){
+    setCurrentUser(null);
+    localStorage.removeItem('user');
+  }
   return (
     <AuthContext.Provider value={{ users, setUsers, signUp, login }}>
       {children}
