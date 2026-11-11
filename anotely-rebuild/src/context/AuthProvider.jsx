@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState(() => {
     try{
       const findUsers = JSON.parse(localStorage.getItem('users'));
@@ -17,9 +19,10 @@ const AuthProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("users")).find(
+      const wantedUser = JSON.parse(localStorage.getItem("users")).find(
         (user) => user.email === localStorage.getItem("user"),
-      );
+      )
+      return wantedUser;
     } catch {
       return null;
     }
@@ -46,6 +49,7 @@ const AuthProvider = ({ children }) => {
     toast.success(`Welcome to Anotely, ${newUser.email}`)
     localStorage.setItem("user", JSON.stringify(newUser.email));
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    navigate('/');
   }
   function login(email, password){
     if(users.length === 0){
@@ -57,17 +61,21 @@ const AuthProvider = ({ children }) => {
       toast.error("Wrong email or password!");
       return;
   }
+  
   setCurrentUser(intendedUser);
-  toast.success(`Welcome back, ${currentUser.email}`)
-  localStorage.setItem('user', JSON.stringify(intendedUser.email))
+  toast.success(`Welcome back, ${email}`)
+  localStorage.setItem('user', JSON.stringify(email));
+  navigate('/');
   }
 
   function logout(){
-    setCurrentUser(null);
     localStorage.removeItem('user');
+    const emptyUser = null;
+    setCurrentUser(emptyUser);
+    navigate('/');
   }
   return (
-    <AuthContext.Provider value={{ users, setUsers, signUp, login }}>
+    <AuthContext.Provider value={{ users, setUsers, signUp, login, logout, currentUser }}>
       {children}
     </AuthContext.Provider>
   );

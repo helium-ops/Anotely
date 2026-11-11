@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import darkMode  from "../assets/Dark_mode.png"
 import lightMode from "../assets/Light_mode.png"
 import Theme from './Theme'
+import { useAuth } from '../context/AuthProvider'
 
 const Header = ({theme, setTheme}) => {
-  
+  const { logout, currentUser } = useAuth();
   useEffect(()=>{
     setTheme(()=>{
     try{
@@ -18,8 +19,10 @@ const Header = ({theme, setTheme}) => {
         <div>
      <img src={theme === 'dark' ? lightMode : darkMode} alt="Logo" className='h-15 sm:h-16 md:h-17 lg:h-18 xl:h-19'/>
      </div>
-      <section className='flex justify-center items-center gap-1 mr-4 sm:mr-5 md:mr-6 lg:mr-8 scale-80 sm:scale-90 md:scale-100'>
-        <Theme theme={theme} setTheme={setTheme}/>
+      <section className='flex justify-center items-center gap-3 mr-4 sm:mr-5 md:mr-6 lg:mr-8 scale-80 sm:scale-90 md:scale-100'>
+        { currentUser != null && <button className='h-10 btn w-24 font-semibold rounded-sm' onClick={()=>{logout()}}>Logout</button>}
+                <Theme theme={theme} setTheme={setTheme}/>
+
       </section>
     </header>
   )
