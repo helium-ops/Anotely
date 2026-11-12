@@ -46,6 +46,7 @@ const AuthProvider = ({ children }) => {
     
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
+    setCurrentUser(newUser.email);
     toast.success(`Welcome to Anotely, ${newUser.email}`)
     localStorage.setItem("user", JSON.stringify(newUser.email));
     localStorage.setItem("users", JSON.stringify(updatedUsers));

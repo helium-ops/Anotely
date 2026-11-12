@@ -10,7 +10,7 @@ const Dashboard = () => {
     return intendedUser;
   })
   return (
-    <main className="h-full min-h-0 w-full flex justify-start items-start flex-col gap-13 md:flex-1 min-w-0 overflow-y-auto pt-8 pl-8 relative">
+    <main className="h-[91%] lg:h-[80%] min-h-0 w-full flex justify-start items-start flex-col gap-13 md:flex-1 min-w-0 pt-8 pl-8 px-3 overflow-y-auto fixed bottom-2 right-2 z-[999] lg:-mr-55 lg:mb-10 ">
         <header className='w-full flex justify-start items-start flex-col gap-2 pl-2'>
             <h1 className='font-bold text-xl md:text-2xl scale-110'>Welcome to Anotely, {currentUser.email}</h1>
             <h3 className='text-sm md:text-md text-gray-500 dark:text-gray-400 font-semibold scale-110'>Get started with the platform</h3>
@@ -22,7 +22,7 @@ const Dashboard = () => {
             </div>
             <button className='h-10 w-30 btn rounded-sm font-semibold scale-92 ml-2'>First subject</button>
         </section>
-        <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[90%] gap-7'>
+        <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[90%] lg:w-[80%] gap-7'>
             <section className='flex justify-between items-start p-5 flex-col gap-4 surface h-45 rounded-xl'>
                 <Book size={50}/>
                 <div className='flex justify-start items-start flex-col gap-1'>
