@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./pages/Auth";
 import ResetPassword from "./components/ResetPassword";
 import Home from "./pages/Home";
+import SubjectProvider from "./context/SubjectProvider";
 
 function Container(){
     const [theme, setTheme] = useState(()=>{
@@ -23,7 +24,7 @@ function Container(){
       })
       const { currentUser } = useAuth();
     return(
-        <section className="w-full h-full dark:bg-black dark:text-white">
+        <section className="w-full h-full dark:bg-black dark:text-white fixed">
           <Toaster position="top-right"/>
         <Header theme={theme} setTheme={setTheme}/>
         
@@ -43,7 +44,9 @@ function App() {
    return(
     <BrowserRouter>
     <AuthProvider>
+      <SubjectProvider>
     <Container/>
+    </SubjectProvider>
     </AuthProvider>
     </BrowserRouter>
    )

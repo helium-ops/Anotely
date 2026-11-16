@@ -19,9 +19,7 @@ const AuthProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const wantedUser = JSON.parse(localStorage.getItem("users")).find(
-        (user) => user.email === localStorage.getItem("user"),
-      )
+      const wantedUser = JSON.parse(localStorage.getItem('users')).find((user)=> user.email === JSON.parse(localStorage.getItem('user')));
       return wantedUser;
     } catch {
       return null;
@@ -46,28 +44,32 @@ const AuthProvider = ({ children }) => {
     
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
-    setCurrentUser(newUser.email);
+    setCurrentUser(updatedUsers.find((user)=>user.email === email));
     toast.success(`Welcome to Anotely, ${newUser.email}`)
     localStorage.setItem("user", JSON.stringify(newUser.email));
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     navigate('/');
   }
-  function login(email, password){
-    if(users.length === 0){
-      toast.error('No users yet!');
-      return;
-    }
-    const intendedUser = users.find((user)=> user.email === email || user.password === password);
-    if(email != intendedUser.email || intendedUser.password != password){
-      toast.error("Wrong email or password!");
-      return;
+  function login(email, password) {
+  if (users.length === 0) {
+    toast.error("No users yet!");
+    return;
   }
-  
+
+  const intendedUser = users.find(
+    (user) => user.email === email && user.password === password
+  );
+
+  if (!intendedUser) {
+    toast.error("Wrong email or password!");
+    return;
+  }
+
   setCurrentUser(intendedUser);
-  toast.success(`Welcome back, ${email}`)
-  localStorage.setItem('user', JSON.stringify(email));
-  navigate('/');
-  }
+  toast.success(`Welcome back, ${email}`);
+  localStorage.setItem("user", JSON.stringify(email));
+  navigate("/");
+}
 
   function logout(){
     localStorage.removeItem('user');
@@ -76,7 +78,7 @@ const AuthProvider = ({ children }) => {
     navigate('/');
   }
   return (
-    <AuthContext.Provider value={{ users, setUsers, signUp, login, logout, currentUser }}>
+    <AuthContext.Provider value={{ users, setUsers, signUp, login, logout, currentUser, setCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
+import { useSubject } from "../context/SubjectProvider";
 
 const Navbar = () => {
-  const [currentUser, setCurrentUser] = React.useState(() => {
-    const users = JSON.parse(localStorage.getItem("users"));
-    const email = JSON.parse(localStorage.getItem("user"));
-    const intendedUser = users.find((user) => user.email === email);
-    return intendedUser;
-  });
-
+  const { currentUser } = useAuth();
+  const { makeSubject } = useSubject();
   const subjects = currentUser.subjects;
   const quizzes = currentUser.quizzes;
   const focusSessions = currentUser.focusSessions;
@@ -28,7 +25,7 @@ const Navbar = () => {
           <div className="flex justify-center items-center flex-col gap-1">
             {subjects.length === 0 ? (
               <h3 className="text-sm">Make your first subject!</h3>
-            ) : subjects.length <= 3 ? (
+            ) : subjects.length < 3 ? (
               subjects.map((subject) => (
                 <Link key={subject.id} to={subject.id}>
                   {subject.name}
@@ -36,15 +33,15 @@ const Navbar = () => {
               ))
             ) : (
               <>
-                <Link to={subjects[0].id}>{subjects[0].name}</Link>
-                <Link to={subjects[1].id}>{subjects[1].name}</Link>
-                <Link to={subjects[2].id}>{subjects[2].name}</Link>
+                <Link to={subjects[0].id} key={subjects[0].id}>{subjects[0].name}</Link>
+                <Link to={subjects[1].id} key={subjects[1].id}>{subjects[1].name}</Link>
+                <Link to={subjects[2].id} key={subjects[2].id}>{subjects[2].name}</Link>
               </>
             )}
           </div>
 
-          <button className="btn min-w-30 h-10 font-medium rounded-sm">
-            First subject
+          <button className={`btn min-w-30 w-33 min-h-10 h-11 font-medium rounded-sm`}onClick={makeSubject}>
+            {subjects.length === 0 ? 'First subject' : 'See all subjects'}
           </button>
         </section>
 
@@ -65,10 +62,18 @@ const Navbar = () => {
               ))
             ) : (
               <>
-                <Link to={quizzes[0].id}>{quizzes[0].name}</Link>
-                <Link to={quizzes[1].id}>{quizzes[1].name}</Link>
-                <Link to={quizzes[2].id}>{quizzes[2].name}</Link>
-              </>
+  <Link to={quizzes[0].id} key={quizzes[0].id}>
+    {quizzes[0].name}
+  </Link>
+
+  <Link to={quizzes[1].id} key={quizzes[1].id}>
+    {quizzes[1].name}
+  </Link>
+
+  <Link to={quizzes[2].id} key={quizzes[2].id}>
+    {quizzes[2].name}
+  </Link>
+</>
             )}
           </div>
 
@@ -93,17 +98,19 @@ const Navbar = () => {
                 </Link>
               ))
             ) : (
-              <>
-                <Link to={focusSessions[0].id}>
-                  {focusSessions[0].name}
-                </Link>
-                <Link to={focusSessions[1].id}>
-                  {focusSessions[1].name}
-                </Link>
-                <Link to={focusSessions[2].id}>
-                  {focusSessions[2].name}
-                </Link>
-              </>
+             <>
+  <Link key={focusSessions[0].id} to={focusSessions[0].id}>
+    {focusSessions[0].name}
+  </Link>
+
+  <Link key={focusSessions[1].id}  to={focusSessions[1].id}>
+    {focusSessions[1].name}
+  </Link>
+
+  <Link key={focusSessions[2].id}  to={focusSessions[2].id}>
+    {focusSessions[2].name}
+  </Link>
+</>
             )}
           </div>
 
