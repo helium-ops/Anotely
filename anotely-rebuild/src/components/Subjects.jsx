@@ -50,7 +50,7 @@ const Subjects = () => {
                 </header>
                 <h3 className='text-lg text-gray-300 dark:text-gray-500'>{topics.length} topics</h3>
                 </section>
-                <Link to={subject.id} className='btn h-10 w-33 flex justify-center items-center text-sm rounded-sm'>See full subject</Link>
+                <Link to={`/${subject.id}`} className='btn h-10 w-33 flex justify-center items-center text-sm rounded-sm'>See full subject</Link>
             </article> 
           )
 })}
