@@ -1,16 +1,16 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useSubject } from "../context/SubjectProvider";
 
 const Navbar = () => {
   const { currentUser } = useAuth();
   const { makeSubject } = useSubject();
+  const navigate = useNavigate();
   const subjects = currentUser.subjects;
   const quizzes = currentUser.quizzes;
   const focusSessions = currentUser.focusSessions;
-
   return (
     <aside className="hidden h-full min-h-0 lg:flex lg:justify-around lg:items-start lg:flex-col border-r border-gray-200 w-50 dark:border-gray-700 pl-4">
 
@@ -40,7 +40,9 @@ const Navbar = () => {
             )}
           </div>
 
-          <button className={`btn min-w-30 w-33 min-h-10 h-11 font-medium rounded-sm`}onClick={makeSubject}>
+          <button className={`btn min-w-30 w-33 min-h-10 h-11 font-medium rounded-sm`}onClick={(e)=>{
+            e.target.textContent === 'First subject' ? makeSubject() : navigate('/subjects')
+            }}>
             {subjects.length === 0 ? 'First subject' : 'See all subjects'}
           </button>
         </section>

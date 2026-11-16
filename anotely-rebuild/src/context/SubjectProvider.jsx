@@ -4,9 +4,12 @@ import { useAuth } from './AuthProvider'
 const SubjectContext = createContext(null);
 
 const SubjectProvider = ({children}) => {
-  const { currentUser, users, setUsers  } = useAuth();
+  const { currentUser, setCurrentUser, users, setUsers } = useAuth();
   
   function makeSubject(){
+    if(!currentUser){
+      return;
+    }
     const subjects = currentUser.subjects;
     const newSubject = {
       id: crypto.randomUUID(),
@@ -16,11 +19,21 @@ const SubjectProvider = ({children}) => {
     const updatedSubjects = [...subjects, newSubject];
     const updatedUser = {...currentUser, subjects: updatedSubjects};
     const updatedUsers = users.map((user)=> user.id === currentUser.id ? updatedUser : user);
+    setCurrentUser(updatedUser);
     setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers))
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
+  function deleteSubject(id){
+    const subjects = currentUser.subjects;
+    const updatedSubjects = subjects.filter((subject)=> subject.id != id);
+    const updatedUser = {...currentUser, subjects: updatedSubjects};
+    const updatedUsers = users.map((user)=> user.id === currentUser.id ? updatedUser : user);
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers);
+    localStorage.setItem(('users', JSON.stringify(updatedUsers)));
   }
   return (
-    <SubjectContext.Provider value={{makeSubject}}>{children}</SubjectContext.Provider>
+    <SubjectContext.Provider value={{makeSubject, deleteSubject}}>{children}</SubjectContext.Provider>
   )
 }
 
