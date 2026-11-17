@@ -1,16 +1,16 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthProvider";
 
 const SubjectContext = createContext(null);
 
 const SubjectProvider = ({ children }) => {
   const { currentUser, setCurrentUser, users, setUsers } = useAuth();
+      const [subjects, setSubjects] = useState(currentUser === null ? [] : currentUser.subjects);
 
   function makeSubject() {
     if (!currentUser) {
       return;
     }
-    const subjects = currentUser.subjects;
     const newSubject = {
       id: crypto.randomUUID(),
       name: "Untitled",
@@ -26,7 +26,7 @@ const SubjectProvider = ({ children }) => {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
   }
   function deleteSubject(id) {
-    const subjects = currentUser.subjects;
+    
     const updatedSubjects = subjects.filter((subject) => subject.id !== id);
     const updatedUser = { ...currentUser, subjects: updatedSubjects };
     const updatedUsers = users.map((user) =>
@@ -37,8 +37,29 @@ const SubjectProvider = ({ children }) => {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
   }
 
+  function addTopic(id){
+    const subject = subjects.find((subject)=>subject.id === id);
+    if(!subject)return;
+    const newTopic = {
+      name: 'Untitled',
+      id: crypto.randomUUID(),
+      notes: []
+    }
+     const updatedSubject = {
+      ...subject,
+      topics: [...(subject.topics || []), newTopic]
+    }
+    const updatedSubjects = subjects.map((targettedSubject)=> targettedSubject.id === id ? updatedSubject : targettedSubject);
+    const updatedUser = {...currentUser, subjects: updatedSubjects};
+    const updatedUsers = users.map((user)=>user.id === currentUser.id ? updatedUser : user);
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    alert(newTopic.name)
+  }
+
   return (
-    <SubjectContext.Provider value={{ makeSubject, deleteSubject }}>
+    <SubjectContext.Provider value={{ makeSubject, deleteSubject, addTopic }}>
       {children}
     </SubjectContext.Provider>
   );

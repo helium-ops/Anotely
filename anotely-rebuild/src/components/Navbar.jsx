@@ -27,15 +27,15 @@ const Navbar = () => {
               <h3 className="text-sm">Make your first subject!</h3>
             ) : subjects.length < 3 ? (
               subjects.map((subject) => (
-                <Link key={subject.id} to={subject.id}>
+                <Link key={subject.id} to={`/${subject.id}`}>
                   {subject.name}
                 </Link>
               ))
             ) : (
               <>
-                <Link to={subjects[0].id} key={subjects[0].id}>{subjects[0].name}</Link>
-                <Link to={subjects[1].id} key={subjects[1].id}>{subjects[1].name}</Link>
-                <Link to={subjects[2].id} key={subjects[2].id}>{subjects[2].name}</Link>
+                <Link to={`/${subjects[0].id}`} key={subjects[0].id}>{subjects[0].name}</Link>
+                <Link to={`/${subjects[1].id}`} key={subjects[1].id}>{subjects[1].name}</Link>
+                <Link to={`/${subjects[2].id}`} key={subjects[2].id}>{subjects[2].name}</Link>
               </>
             )}
           </div>
