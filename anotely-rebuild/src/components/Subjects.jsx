@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 
 const Subjects = () => {
     const { currentUser, users, setUsers } = useAuth();
-    const { makeSubject, deleteSubject } = useSubject();
+    const { makeSubject, deleteSubject, changeSubjectName } = useSubject();
     const [menuOpen, setMenuOpen] = useState(null);
+    const [changeName, setChangeName] = useState(null);
     const subjects = currentUser.subjects;
 
   return (
@@ -32,17 +33,28 @@ const Subjects = () => {
 
           return(
             <article key={subject.id} className='flex justify-start items-start flex-col gap-4 bg-gray-100 dark:bg-gray-900 h-40 w-50 py-4 px-4 rounded-lg scale-80 md:scale-90 xl:scale-100'>
-                <section className='flex justify-start items-start flex-col gap-1'>
-                  <header className='flex justify-between items-center gap-9'>
-                <h1 className='text-3xl font-bold'>{subject.name}</h1>
-                <button className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full mr-16" onClick={()=>setMenuOpen(subject.id)}>
+                <section className='flex w-full min-w-0 justify-start items-start flex-col gap-1'>
+                  <header className='flex w-full min-w-0 justify-between items-center gap-2'>
+                    <div className='min-w-0 flex-1'>
+                    {
+                    changeName !== subject.id ?
+                <h1 className='w-full truncate text-2xl font-bold' title={subject.name}>{subject.name}</h1> : 
+                <input type="text" defaultValue={subject.name} className='w-full border border-white dark:border-black rounded-md font-bold outline-none pl-2'
+                onKeyDown={(e)=>{
+                  if(e.key === "Enter"){
+                  changeSubjectName(subject.id, e.target.value);
+                  setChangeName(null);
+                }}}/>
+                  }
+                    </div>
+                <button className="shrink-0 hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full" onClick={()=>setMenuOpen(subject.id)} aria-label={`Options for ${subject.name}`}>
                   <MoreVertical size={21}/>
                 </button>
                 {menuOpen === subject.id && (
-                  <section className='bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl'>
+                  <section className='bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl z-999'>
                    <button className='p-3 hover:bg-white/5 text-lg' onClick={()=>setMenuOpen(null)}><X size={20}/></button>
                     <div className='flex justify-start items-start flex-col gap-2 font-semibold pr-3'>
-                      <button>Rename</button>
+                      <button onClick={()=>setChangeName(subject.id)}>Rename</button>
                       <button onClick={()=>deleteSubject(subject.id)}>Delete</button>
                     </div>
                   </section>

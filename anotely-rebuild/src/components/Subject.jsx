@@ -27,7 +27,7 @@ const Subject = ({ subject }) => {
       </header>
       <section className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5 flex-wrap w-[80%]">
       {subject.topics.map((topic) => {
-        const topics = topic.topics;
+        const notes = topic.notes;
 
         return (
           <article

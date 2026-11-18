@@ -37,6 +37,23 @@ const SubjectProvider = ({ children }) => {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
   }
 
+  function changeSubjectName(id, name){
+    const targettedSubject = subjects.find((subject)=>subject.id === id);
+    const updatedSubject = {
+      ...targettedSubject,
+      name: name
+    };
+    const updatedSubjects = subjects.map((subject)=>subject.id === id ? updatedSubject : subject);
+    const updatedUser = {
+      ...currentUser,
+      subjects: updatedSubjects
+    };
+    const updatedUsers = users.map((user)=>user.id === currentUser.id ? updatedUser : user);
+    setUsers(updatedUsers);
+    setCurrentUser(updatedUser);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
+
   function addTopic(id){
     const subject = subjects.find((subject)=>subject.id === id);
     if(!subject)return;
@@ -59,7 +76,7 @@ const SubjectProvider = ({ children }) => {
   }
 
   return (
-    <SubjectContext.Provider value={{ makeSubject, deleteSubject, addTopic }}>
+    <SubjectContext.Provider value={{ makeSubject, deleteSubject, changeSubjectName, addTopic }}>
       {children}
     </SubjectContext.Provider>
   );
