@@ -14,7 +14,7 @@ const Home = () => {
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path="subjects" element={<Subjects />} />
-        {currentUser.subjects.map((subject)=>(
+        {currentUser != null && currentUser.subjects?.map((subject)=>(
           <Route path={`/${subject.id}`} key={subject.id} element={<Subject subject={subject}/>}/>
         ))}
       </Routes>

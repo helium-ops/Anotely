@@ -19,8 +19,8 @@ const AuthProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const wantedUser = JSON.parse(localStorage.getItem('users')).find((user)=> user.email === JSON.parse(localStorage.getItem('user')));
-      return wantedUser;
+      const wantedUser = JSON.parse(localStorage.getItem('users')).find((user)=>user.email === localStorage.getItem('user'));
+      return wantedUser ?? null;
     } catch {
       return null;
     }
@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
     const newUser = {
       email,
       password,
+      id: crypto.randomUUID(),
       subjects: [],
       quizzes: [],
       focusSessions: [],
@@ -44,7 +45,7 @@ const AuthProvider = ({ children }) => {
     
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
-    setCurrentUser(updatedUsers.find((user)=>user.email === email));
+    setCurrentUser(updatedUsers.find((user) => user.email === email));
     toast.success(`Welcome to Anotely, ${newUser.email}`)
     localStorage.setItem("user", JSON.stringify(newUser.email));
     localStorage.setItem("users", JSON.stringify(updatedUsers));
