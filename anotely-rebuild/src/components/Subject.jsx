@@ -5,7 +5,7 @@ import { useSubject } from "../context/SubjectProvider";
 
 const Subject = ({ subject }) => {
   const [menuOpen, setMenuOpen] = useState(null);
-  const {addTopic} = useSubject();
+  const {addTopic, deleteTopic} = useSubject();
   return (
     <main className="h-[91%] lg:h-[80%] min-h-0 w-full flex justify-start items-start flex-col gap-13 md:flex-1 min-w-0 pt-8 pl-8 px-3 overflow-y-auto fixed bottom-2 right-2 z-[999] lg:-mr-55 lg:mb-10 ">
       <header className="flex justify-between items-center w-full lg:w-[80%]">
@@ -53,7 +53,7 @@ const Subject = ({ subject }) => {
                     </button>
                     <div className="flex justify-start items-start flex-col gap-2 font-semibold pr-3">
                       <button>Rename</button>
-                      <button>
+                      <button onClick={()=>deleteTopic(subject.id, topic.id)}>
                         Delete
                       </button>
                     </div>

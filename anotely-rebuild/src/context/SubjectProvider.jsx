@@ -73,9 +73,27 @@ const SubjectProvider = ({ children }) => {
     saveSubjects(updatedSubjects);
   }
 
+  function deleteTopic(subjectId, topicId){
+    let targettedSubject = subjects.find((subject)=>subject.id === subjectId);
+    const updatedTopics = targettedSubject.topics.filter((topic)=>topic.id !== topicId);
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: updatedTopics
+    };
+    const updatedSubjects = subjects.map((subject)=>subject.id = subjectId ? updatedSubject : subject);
+    const updatedUser = {
+      ...currentUser,
+      subjects: updatedSubjects
+    };
+    const updatedUsers = users.map((user)=> user.id === currentUser.id ? updatedUser : user);
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
+
   return (
     <SubjectContext.Provider
-      value={{ makeSubject, deleteSubject, changeSubjectName, addTopic }}
+      value={{ makeSubject, deleteSubject, changeSubjectName, addTopic, deleteTopic }}
     >
       {children}
     </SubjectContext.Provider>
