@@ -1,9 +1,11 @@
 import React, { createContext, useContext } from "react";
 import { useAuth } from "./AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const SubjectContext = createContext(null);
 
 const SubjectProvider = ({ children }) => {
+  const navigate = useNavigate();
   const { currentUser, setCurrentUser, users, setUsers } = useAuth();
   const subjects = currentUser?.subjects ?? [];
 
@@ -75,12 +77,13 @@ const SubjectProvider = ({ children }) => {
 
   function deleteTopic(subjectId, topicId){
     let targettedSubject = subjects.find((subject)=>subject.id === subjectId);
+    if (!targettedSubject) return;
     const updatedTopics = targettedSubject.topics.filter((topic)=>topic.id !== topicId);
     const updatedSubject = {
       ...targettedSubject,
       topics: updatedTopics
     };
-    const updatedSubjects = subjects.map((subject)=>subject.id = subjectId ? updatedSubject : subject);
+    const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
     const updatedUser = {
       ...currentUser,
       subjects: updatedSubjects
@@ -89,6 +92,8 @@ const SubjectProvider = ({ children }) => {
     setCurrentUser(updatedUser);
     setUsers(updatedUsers);
     localStorage.setItem('users', JSON.stringify(updatedUsers));
+    localStorage.setItem('user', updatedUser.email)
+    navigate(updatedSubjects.id);
   }
 
   return (
