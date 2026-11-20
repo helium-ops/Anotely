@@ -5,7 +5,8 @@ import { useSubject } from "../context/SubjectProvider";
 
 const Subject = ({ subject }) => {
   const [menuOpen, setMenuOpen] = useState(null);
-  const {addTopic, deleteTopic} = useSubject();
+  const [changeName, setChangeName] = useState(null);
+  const { addTopic, deleteTopic, renameTopic } = useSubject();
   return (
     <main className="h-[91%] lg:h-[80%] min-h-0 w-full flex justify-start items-start flex-col gap-13 md:flex-1 min-w-0 pt-8 pl-8 px-3 overflow-y-auto fixed bottom-2 right-2 z-[999] lg:-mr-55 lg:mb-10 ">
       <header className="flex justify-between items-center w-full lg:w-[80%]">
@@ -18,61 +19,91 @@ const Subject = ({ subject }) => {
           </h3>
         </div>
         <section className="flex justify-center items-center gap-2">
-          <button className="btn flex justify-center gap-1 items-center h-12 w-37 rounded-sm scale-90 lg:scale-100"
-          onClick={()=>addTopic(subject.id)}>
+          <button
+            className="btn flex justify-center gap-1 items-center h-12 w-37 rounded-sm scale-90 lg:scale-100"
+            onClick={() => addTopic(subject.id)}
+          >
             <span>Add a topic</span>
             <Plus size={20} />
           </button>
         </section>
       </header>
       <section className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5 flex-wrap w-[80%]">
-      {subject.topics.map((topic) => {
-        const notes = topic.notes;
+        {subject.topics.map((topic) => {
+          const notes = topic.notes;
 
-        return (
-          <article
-            key={topic.id}
-            className="flex justify-start items-start flex-col gap-4 bg-gray-100 dark:bg-gray-900 h-40 w-50 py-4 px-4 rounded-lg scale-80 md:scale-90 xl:scale-100"
-          >
-            <section className="flex justify-start items-start flex-col gap-1">
-              <header className="flex justify-between items-center gap-9">
-                <h1 className="text-3xl font-bold">{topic.name}</h1>
-                <button
-                  className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full mr-16"
-                  onClick={() => setMenuOpen(topic.id)}
-                >
-                  <MoreVertical size={21} />
-                </button>
-                {menuOpen === topic.id && (
-                  <section className="bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl">
-                    <button
-                      className="p-3 hover:bg-white/5 text-lg"
-                      onClick={() => setMenuOpen(null)}
-                    >
-                      <X size={20} />
-                    </button>
-                    <div className="flex justify-start items-start flex-col gap-2 font-semibold pr-3">
-                      <button>Rename</button>
-                      <button onClick={()=>deleteTopic(subject.id, topic.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </section>
-                )}
-              </header>
-              <h3 className="text-lg text-gray-300 dark:text-gray-500">
-                {topic.notes.length} notes
-              </h3>
-            </section>
-            <Link
-              to={`/${topic.id}`}
-              className="btn h-10 w-33 flex justify-center items-center text-sm rounded-sm"
+          return (
+            <article
+              key={topic.id}
+              className="flex justify-start items-start flex-col gap-4 bg-gray-100 dark:bg-gray-900 h-40 w-50 py-4 px-4 rounded-lg scale-80 md:scale-90 xl:scale-100"
             >
-              See full topic
-            </Link>
-          </article>
-        );
-      })}
+              <section className="flex w-full min-w-0 justify-start items-start flex-col gap-1">
+                <header className="flex w-full min-w-0 justify-between items-center gap-2">
+                  {changeName === null ? (
+                    <h1 className={`w-full ${(e)=>{
+                      if(e.target.textContent.length <= 8){
+                        
+                        return;
+                      }
+                      return 'truncate';
+                    }} text-2xl font-bold`} title={topic.name}>
+                      {topic.name.length > 8 ? (
+                        <>{topic.name.slice(0, 4)}<span className="text-base">...</span></>
+                      ) : topic.name}
+                    </h1>
+                  ) : (
+                    <input
+                      type="text"
+                      defaultValue={topic.name}
+                      className="w-[20vh] border border-white dark:border-black rounded-md font-bold outline-none pl-2 scale-110 "
+                      onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                          renameTopic(subject.id, topic.id, e.target.value);
+                          return;
+                        }
+                      }}
+                    />
+                  )}
+                  <button
+                    className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full mr-13"
+                    onClick={() => setMenuOpen(topic.id)}
+                  >
+                    <MoreVertical size={21} />
+                  </button>
+                  {menuOpen === topic.id && (
+                    <section className="bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl">
+                      <button
+                        className="p-3 hover:bg-white/5 text-lg"
+                        onClick={() => setMenuOpen(null)}
+                      >
+                        <X size={20} />
+                      </button>
+                      <div className="flex justify-start items-start flex-col gap-2 font-semibold pr-3">
+                        <button onClick={()=>setChangeName(topic.id)}>
+                          Rename
+                        </button>
+                        <button
+                          onClick={() => deleteTopic(subject.id, topic.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </section>
+                  )}
+                </header>
+                <h3 className="text-lg text-gray-300 dark:text-gray-500">
+                  {topic.notes.length} notes
+                </h3>
+              </section>
+              <Link
+                to={`/${topic.id}`}
+                className="btn h-10 w-33 flex justify-center items-center text-sm rounded-sm"
+              >
+                See full topic
+              </Link>
+            </article>
+          );
+        })}
       </section>
     </main>
   );

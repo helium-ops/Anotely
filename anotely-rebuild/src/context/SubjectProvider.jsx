@@ -18,7 +18,7 @@ const SubjectProvider = ({ children }) => {
     };
 
     const updatedUsers = users.map((user) =>
-      user.email === currentUser.email ? updatedUser : user,
+      user.id === currentUser.id ? updatedUser : user,
     );
 
     setCurrentUser(updatedUser);
@@ -93,12 +93,29 @@ const SubjectProvider = ({ children }) => {
     setUsers(updatedUsers);
     localStorage.setItem('users', JSON.stringify(updatedUsers));
     localStorage.setItem('user', updatedUser.email)
-    navigate(updatedSubjects.id);
   }
+
+  
+function renameTopic(subjectId, topicId, name) {
+  const targettedSubject = subjects.find((subject)=>subject.id === subjectId);
+  const topics = targettedSubject.topics;
+  const targettedTopic = topics.find((topic)=>topic.id === topicId);
+  const updatedTopic = {
+    ...targettedTopic,
+    name: name
+  }
+  const updatedTopics = topics.map((topic)=>topic.id === topicId ? updatedTopic : topic);
+  const updatedSubject = {
+    ...targettedSubject,
+    topics: updatedTopics
+  };
+  const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
+  saveSubjects(updatedSubjects);
+}
 
   return (
     <SubjectContext.Provider
-      value={{ makeSubject, deleteSubject, changeSubjectName, addTopic, deleteTopic }}
+      value={{ makeSubject, deleteSubject, changeSubjectName, addTopic, deleteTopic, renameTopic }}
     >
       {children}
     </SubjectContext.Provider>
