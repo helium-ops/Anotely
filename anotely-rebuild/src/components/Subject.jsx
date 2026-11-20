@@ -40,15 +40,9 @@ const Subject = ({ subject }) => {
               <section className="flex w-full min-w-0 justify-start items-start flex-col gap-1">
                 <header className="flex w-full min-w-0 justify-between items-center gap-2">
                   {changeName === null ? (
-                    <h1 className={`w-full ${(e)=>{
-                      if(e.target.textContent.length <= 8){
-                        
-                        return;
-                      }
-                      return 'truncate';
-                    }} text-2xl font-bold`} title={topic.name}>
+                    <h1 className="w-full text-2xl font-bold" title={topic.name}>
                       {topic.name.length > 8 ? (
-                        <>{topic.name.slice(0, 4)}<span className="text-base">...</span></>
+                        <>{topic.name.slice(0, 8)}<span className="text-base">.</span></>
                       ) : topic.name}
                     </h1>
                   ) : (
