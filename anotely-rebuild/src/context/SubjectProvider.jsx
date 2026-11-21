@@ -178,6 +178,31 @@ const SubjectProvider = ({ children }) => {
     saveSubjects(updatedSubjects);
   }
 
+  function renameNote(subjectId, topicId, noteId, name){
+    const targettedSubject = subjects.find(
+      (subject) => subject.id === subjectId,
+    );
+    const topics = targettedSubject.topics;
+    const targettedTopic = topics.find((topic) => topic.id === topicId);
+    const notes = targettedTopic.notes;
+    const targettedNote = notes.find((note)=>note.id === noteId);
+    const updatedNote = {
+      ...targettedNote,
+      name: name
+    }
+    const updatedNotes = notes.map((note)=>note.id === noteId ? updatedNote : note);
+    const updatedTopic = {
+      ...targettedTopic,
+      notes: updatedNotes
+    }
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: targettedSubject.topics.map((topic)=>topic.id === topicId ? updatedTopic : topic)
+    }
+    const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
+    saveSubjects(updatedSubjects);
+  }
+
   return (
     <SubjectContext.Provider
       value={{
@@ -188,7 +213,8 @@ const SubjectProvider = ({ children }) => {
         deleteTopic,
         renameTopic,
         addNote,
-        deleteNote
+        deleteNote,
+        renameNote
       }}
     >
       {children}
