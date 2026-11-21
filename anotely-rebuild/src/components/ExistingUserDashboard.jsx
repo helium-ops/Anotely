@@ -22,7 +22,7 @@ const ExistingUserDashboard = () => {
           return(
             <article key={subject.id} className='flex justify-start items-start flex-col gap-4 bg-gray-100 dark:bg-gray-900 h-40 w-50 py-4 px-4 rounded-lg scale-80 md:scale-90 xl:scale-100'>
                 <section className='flex justify-start items-start flex-col gap-1'>
-                <h1 className='text-3xl font-bold'>{subject.name}</h1>
+                <h1 className='w-full text-2xl font-bold truncate'>{subject.name}</h1>
                 <h3 className='text-lg text-gray-300 dark:text-gray-500'>{topics.length} topics</h3>
                 </section>
                 <Link to={subject.id} className='btn h-10 w-33 flex justify-center items-center text-sm rounded-sm'>See full subject</Link>
