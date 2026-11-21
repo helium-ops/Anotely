@@ -75,47 +75,94 @@ const SubjectProvider = ({ children }) => {
     saveSubjects(updatedSubjects);
   }
 
-  function deleteTopic(subjectId, topicId){
-    let targettedSubject = subjects.find((subject)=>subject.id === subjectId);
+  function deleteTopic(subjectId, topicId) {
+    let targettedSubject = subjects.find((subject) => subject.id === subjectId);
     if (!targettedSubject) return;
-    const updatedTopics = targettedSubject.topics.filter((topic)=>topic.id !== topicId);
+    const updatedTopics = targettedSubject.topics.filter(
+      (topic) => topic.id !== topicId,
+    );
     const updatedSubject = {
       ...targettedSubject,
-      topics: updatedTopics
+      topics: updatedTopics,
     };
-    const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
     const updatedUser = {
       ...currentUser,
-      subjects: updatedSubjects
+      subjects: updatedSubjects,
     };
-    const updatedUsers = users.map((user)=> user.id === currentUser.id ? updatedUser : user);
+    const updatedUsers = users.map((user) =>
+      user.id === currentUser.id ? updatedUser : user,
+    );
     setCurrentUser(updatedUser);
     setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-    localStorage.setItem('user', updatedUser.email)
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    localStorage.setItem("user", updatedUser.email);
   }
 
-  
-function renameTopic(subjectId, topicId, name) {
-  const targettedSubject = subjects.find((subject)=>subject.id === subjectId);
-  const topics = targettedSubject.topics;
-  const targettedTopic = topics.find((topic)=>topic.id === topicId);
-  const updatedTopic = {
-    ...targettedTopic,
-    name: name
+  function renameTopic(subjectId, topicId, name) {
+    const targettedSubject = subjects.find(
+      (subject) => subject.id === subjectId,
+    );
+    const topics = targettedSubject.topics;
+    const targettedTopic = topics.find((topic) => topic.id === topicId);
+    const updatedTopic = {
+      ...targettedTopic,
+      name: name,
+    };
+    const updatedTopics = topics.map((topic) =>
+      topic.id === topicId ? updatedTopic : topic,
+    );
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: updatedTopics,
+    };
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
+    saveSubjects(updatedSubjects);
   }
-  const updatedTopics = topics.map((topic)=>topic.id === topicId ? updatedTopic : topic);
-  const updatedSubject = {
-    ...targettedSubject,
-    topics: updatedTopics
-  };
-  const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
-  saveSubjects(updatedSubjects);
-}
+
+  function addNote(subjectId, topicId) {
+    const targettedSubject = subjects.find(
+      (subject) => subject.id === subjectId,
+    );
+    const topics = targettedSubject.topics;
+    const targettedTopic = topics.find((topic) => topic.id === topicId);
+    const newNote = {
+      name: "Untitled",
+      text: "",
+      id: crypto.randomUUID(),
+    };
+    const updatedTopic = {
+      ...targettedTopic,
+      notes: [...(targettedSubject.notes ?? []), newNote],
+    };
+    const updatedTopics = topics.map((topic) =>
+      topic.id === topicId ? updatedTopic : topic,
+    );
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: updatedTopics,
+    };
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
+    saveSubjects(updatedSubjects);
+  }
 
   return (
     <SubjectContext.Provider
-      value={{ makeSubject, deleteSubject, changeSubjectName, addTopic, deleteTopic, renameTopic }}
+      value={{
+        makeSubject,
+        deleteSubject,
+        changeSubjectName,
+        addTopic,
+        deleteTopic,
+        renameTopic,
+        addNote
+      }}
     >
       {children}
     </SubjectContext.Provider>
