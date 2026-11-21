@@ -137,9 +137,33 @@ const SubjectProvider = ({ children }) => {
     };
     const updatedTopic = {
       ...targettedTopic,
-      notes: [...(targettedSubject.notes ?? []), newNote],
+      notes: [...(targettedTopic.notes ?? []), newNote],
     };
     const updatedTopics = topics.map((topic) =>
+      topic.id === topicId ? updatedTopic : topic,
+    );
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: updatedTopics,
+    };
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
+    saveSubjects(updatedSubjects);
+  }
+
+  function deleteNote(subjectId, topicId, noteId){
+    const targettedSubject = subjects.find(
+      (subject) => subject.id === subjectId,
+    );
+    const topics = targettedSubject.topics;
+    const targettedTopic = topics.find((topic) => topic.id === topicId);
+    const notes = targettedTopic.notes;
+    const updatedTopic = {
+      ...targettedTopic,
+      notes: notes.filter((note)=>note.id !== noteId)
+    }
+     const updatedTopics = topics.map((topic) =>
       topic.id === topicId ? updatedTopic : topic,
     );
     const updatedSubject = {
@@ -161,7 +185,8 @@ const SubjectProvider = ({ children }) => {
         addTopic,
         deleteTopic,
         renameTopic,
-        addNote
+        addNote,
+        deleteNote
       }}
     >
       {children}

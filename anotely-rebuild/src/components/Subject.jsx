@@ -86,7 +86,7 @@ const Subject = ({ subject }) => {
                   )}
                 </header>
                 <h3 className="text-lg text-gray-300 dark:text-gray-500">
-                  {topic.notes.length} notes
+                  {topic.notes.length} note{topic.notes.length === 1 ? '' : 's'}
                 </h3>
               </section>
               <Link

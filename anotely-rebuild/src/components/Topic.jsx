@@ -1,13 +1,13 @@
-
-import { Plus, MoreVertical } from "lucide-react";
+import { Plus, MoreVertical, X } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useSubject } from "../context/SubjectProvider";
 
 const Topic = ({ topic }) => {
+  const [menuOpen, setMenuOpen] = useState(null);
   const { currentUser } = useAuth();
-  const { addNote } = useSubject();
+  const { addNote, deleteNote } = useSubject();
 
   const subjects = currentUser?.subjects ?? [];
 
@@ -33,9 +33,9 @@ const Topic = ({ topic }) => {
         <button
           className="btn flex justify-center gap-1 items-center h-12 w-35 rounded-sm scale-90 lg:scale-100"
           onClick={() => {
-            if (mainSubject) {
+            if (!mainSubject) return;
               addNote(mainSubject.id, topic.id);
-            }
+            
           }}
         >
           <span>Add a note</span>
@@ -44,7 +44,7 @@ const Topic = ({ topic }) => {
       </header>
 
       {/* Notes */}
-      <section className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5 flex-wrap w-[80%]">
+      <section className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5 flex-wrap w-[90%] md:w-[80%] pt-12">
 
         {(topic.notes ?? []).map((note) => (
           <section
@@ -60,9 +60,28 @@ const Topic = ({ topic }) => {
                 {note.name}
               </h1>
 
-              <button className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full">
+              <button className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full"
+              onClick={()=>setMenuOpen(note.id)}>
                 <MoreVertical size={21} />
               </button>
+              {menuOpen === topic.id && (
+                    <section className="bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl">
+                      <button
+                        className="p-3 hover:bg-white/5 text-lg"
+                        onClick={() => setMenuOpen(null)}
+                      >
+                        <X size={20} />
+                      </button>
+                      <div className="flex justify-start items-start flex-col gap-2 font-semibold pr-3">
+                        <button>
+                          Rename
+                        </button>
+                        <button onClick={()=>deleteNote(mainSubject.id, topic.id, note.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </section>
+                  )}
             </header>
 
             <h3 className="text-lg text-gray-300 dark:text-gray-500">
