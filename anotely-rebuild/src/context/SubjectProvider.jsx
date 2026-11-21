@@ -128,8 +128,10 @@ const SubjectProvider = ({ children }) => {
     const targettedSubject = subjects.find(
       (subject) => subject.id === subjectId,
     );
+    if(!targettedSubject) return;
     const topics = targettedSubject.topics;
     const targettedTopic = topics.find((topic) => topic.id === topicId);
+    if(!targettedTopic) return;
     const newNote = {
       name: "Untitled",
       text: "",

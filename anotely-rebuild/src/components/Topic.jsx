@@ -1,5 +1,5 @@
 import { Plus, MoreVertical, X } from "lucide-react";
-import React from "react";
+import React, {useState}from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useSubject } from "../context/SubjectProvider";
@@ -64,7 +64,7 @@ const Topic = ({ topic }) => {
               onClick={()=>setMenuOpen(note.id)}>
                 <MoreVertical size={21} />
               </button>
-              {menuOpen === topic.id && (
+              {menuOpen === note.id && (
                     <section className="bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl">
                       <button
                         className="p-3 hover:bg-white/5 text-lg"

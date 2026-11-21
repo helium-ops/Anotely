@@ -9,11 +9,9 @@ import Topic from "../components/Topic";
 
 const Home = () => {
   const { currentUser } = useAuth();
-  const [topics, setTopics] = useState(()=>{
-    const subjects = currentUser.subjects;
-    const topics = subjects.flatMap((subject)=>subject.topics);
-    return topics;
-  })
+  const topics = (currentUser?.subjects ?? []).flatMap(
+  (subject) => subject.topics ?? [],
+);
   return (
     <main className="h-165 min-h-0 w-full flex justify-start items-center overflow-hidden relative">
       <Navbar />
