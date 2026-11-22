@@ -128,10 +128,10 @@ const SubjectProvider = ({ children }) => {
     const targettedSubject = subjects.find(
       (subject) => subject.id === subjectId,
     );
-    if(!targettedSubject) return;
+    if (!targettedSubject) return;
     const topics = targettedSubject.topics;
     const targettedTopic = topics.find((topic) => topic.id === topicId);
-    if(!targettedTopic) return;
+    if (!targettedTopic) return;
     const newNote = {
       name: "Untitled",
       text: "",
@@ -154,7 +154,7 @@ const SubjectProvider = ({ children }) => {
     saveSubjects(updatedSubjects);
   }
 
-  function deleteNote(subjectId, topicId, noteId){
+  function deleteNote(subjectId, topicId, noteId) {
     const targettedSubject = subjects.find(
       (subject) => subject.id === subjectId,
     );
@@ -163,9 +163,9 @@ const SubjectProvider = ({ children }) => {
     const notes = targettedTopic.notes;
     const updatedTopic = {
       ...targettedTopic,
-      notes: notes.filter((note)=>note.id !== noteId)
-    }
-     const updatedTopics = topics.map((topic) =>
+      notes: notes.filter((note) => note.id !== noteId),
+    };
+    const updatedTopics = topics.map((topic) =>
       topic.id === topicId ? updatedTopic : topic,
     );
     const updatedSubject = {
@@ -178,28 +178,65 @@ const SubjectProvider = ({ children }) => {
     saveSubjects(updatedSubjects);
   }
 
-  function renameNote(subjectId, topicId, noteId, name){
+  function renameNote(subjectId, topicId, noteId, name) {
     const targettedSubject = subjects.find(
       (subject) => subject.id === subjectId,
     );
     const topics = targettedSubject.topics;
     const targettedTopic = topics.find((topic) => topic.id === topicId);
     const notes = targettedTopic.notes;
-    const targettedNote = notes.find((note)=>note.id === noteId);
+    const targettedNote = notes.find((note) => note.id === noteId);
     const updatedNote = {
       ...targettedNote,
-      name: name
-    }
-    const updatedNotes = notes.map((note)=>note.id === noteId ? updatedNote : note);
+      name: name,
+    };
+    const updatedNotes = notes.map((note) =>
+      note.id === noteId ? updatedNote : note,
+    );
     const updatedTopic = {
       ...targettedTopic,
-      notes: updatedNotes
-    }
+      notes: updatedNotes,
+    };
     const updatedSubject = {
       ...targettedSubject,
-      topics: targettedSubject.topics.map((topic)=>topic.id === topicId ? updatedTopic : topic)
-    }
-    const updatedSubjects = subjects.map((subject)=>subject.id === subjectId ? updatedSubject : subject);
+      topics: targettedSubject.topics.map((topic) =>
+        topic.id === topicId ? updatedTopic : topic,
+      ),
+    };
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
+    saveSubjects(updatedSubjects);
+  }
+
+  function updateNote(subjectId, topicId, noteId, text) {
+    const targettedSubject = subjects.find(
+      (subject) => subject.id === subjectId,
+    );
+    const topics = targettedSubject.topics;
+    const targettedTopic = topics.find((topic) => topic.id === topicId);
+    const notes = targettedTopic.notes;
+    const targettedNote = notes.find((note) => note.id === noteId);
+    const updatedNote = {
+      ...targettedNote,
+      text: text,
+    };
+    const updatedNotes = notes.map((note) =>
+      note.id === noteId ? updatedNote : note,
+    );
+    const updatedTopic = {
+      ...targettedTopic,
+      notes: updatedNotes,
+    };
+    const updatedSubject = {
+      ...targettedSubject,
+      topics: targettedSubject.topics.map((topic) =>
+        topic.id === topicId ? updatedTopic : topic,
+      ),
+    };
+    const updatedSubjects = subjects.map((subject) =>
+      subject.id === subjectId ? updatedSubject : subject,
+    );
     saveSubjects(updatedSubjects);
   }
 
@@ -214,7 +251,8 @@ const SubjectProvider = ({ children }) => {
         renameTopic,
         addNote,
         deleteNote,
-        renameNote
+        renameNote,
+        updateNote
       }}
     >
       {children}

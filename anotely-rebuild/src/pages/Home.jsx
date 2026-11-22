@@ -6,12 +6,16 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import Subject from "../components/Subject";
 import Topic from "../components/Topic";
+import Note from "../components/Note";
 
 const Home = () => {
   const { currentUser } = useAuth();
   const topics = (currentUser?.subjects ?? []).flatMap(
   (subject) => subject.topics ?? [],
 );
+const notes = (topics ?? []).flatMap(
+  (topic) => topic.notes ?? [],
+)
   return (
     <main className="h-165 min-h-0 w-full flex justify-start items-center overflow-hidden relative">
       <Navbar />
@@ -23,6 +27,9 @@ const Home = () => {
         ))}
         {topics.map((topic)=>(
           <Route path={`/${topic.id}`} key={topic.id} element={<Topic topic={topic}/>}/>
+        ))}
+        {notes.map((note)=>(
+         <Route path={`/${note.id}`} key={note.id} element={<Note note={note}/>}/>
         ))}
       </Routes>
     </main>
