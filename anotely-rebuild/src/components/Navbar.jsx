@@ -22,7 +22,7 @@ const Navbar = () => {
             Subjects
           </h1>
 
-          <div className="flex justify-center items-center flex-col gap-1">
+          <div className="flex justify-center items-start flex-col gap-1">
             {subjects.length === 0 ? (
               <h3 className="text-sm">Make your first subject!</h3>
             ) : subjects.length < 3 ? (
