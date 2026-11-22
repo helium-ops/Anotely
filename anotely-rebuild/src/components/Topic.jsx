@@ -6,8 +6,9 @@ import { useSubject } from "../context/SubjectProvider";
 
 const Topic = ({ topic }) => {
   const [menuOpen, setMenuOpen] = useState(null);
+  const [changeName, setChangeName] = useState(null);
   const { currentUser } = useAuth();
-  const { addNote, deleteNote } = useSubject();
+  const { addNote, deleteNote, renameNote } = useSubject();
 
   const subjects = currentUser?.subjects ?? [];
 
@@ -53,13 +54,26 @@ const Topic = ({ topic }) => {
           >
             <section className="flex justify-start items-start flex-col gap-2">
             <header className="flex w-full min-w-0 justify-between items-center gap-2">
-              <h1
-                className="w-full text-2xl font-bold truncate"
-                title={note.name}
-              >
-                {note.name}
-              </h1>
-
+              {changeName === note.id ? (
+                    
+                    <input
+                      type="text"
+                      defaultValue={note.name}
+                      className="w-[20vh] border border-white dark:border-black rounded-md font-bold outline-none pl-2 scale-110 "
+                      onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                          renameNote(mainSubject.id, topic.id, note.id, e.target.value);
+                          return;
+                        }
+                      }}
+                    />
+                  ) : (
+                    <h1 className="w-full text-2xl font-bold" title={topic.name}>
+                      {note.name.length > 8 ? (
+                        <>{note.name.slice(0, 8)}<span className="text-base">.</span></>
+                      ) : note.name}
+                    </h1>
+                  )}
               <button className="hover:bg-white hover:opacity-80 dark:hover:bg-blue-300/5 p-2 rounded-full"
               onClick={()=>setMenuOpen(note.id)}>
                 <MoreVertical size={21} />
@@ -73,7 +87,7 @@ const Topic = ({ topic }) => {
                         <X size={20} />
                       </button>
                       <div className="flex justify-start items-start flex-col gap-2 font-semibold pr-3">
-                        <button>
+                        <button onClick={()=>setChangeName(note.id)}>
                           Rename
                         </button>
                         <button onClick={()=>deleteNote(mainSubject.id, topic.id, note.id)}>
