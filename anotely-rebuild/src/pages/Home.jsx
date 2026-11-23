@@ -8,7 +8,7 @@ import Subject from "../components/Subject";
 import Topic from "../components/Topic";
 import Note from "../components/Note";
 
-const Home = () => {
+const Home = ({nav, isNavOpen, setIsNavOpen}) => {
   const { currentUser } = useAuth();
   const topics = (currentUser?.subjects ?? []).flatMap(
   (subject) => subject.topics ?? [],
@@ -18,7 +18,7 @@ const notes = (topics ?? []).flatMap(
 )
   return (
     <main className="h-165 min-h-0 w-full flex justify-start items-center overflow-hidden relative">
-      <Navbar />
+      <Navbar nav={nav} isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path="subjects" element={<Subjects />} />

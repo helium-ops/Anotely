@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useSubject } from "../context/SubjectProvider";
 
-const Navbar = () => {
+const Navbar = ({nav}) => {
   const { currentUser } = useAuth();
   const { makeSubject } = useSubject();
   const navigate = useNavigate();
@@ -12,8 +12,7 @@ const Navbar = () => {
   const quizzes = currentUser.quizzes;
   const focusSessions = currentUser.focusSessions;
   return (
-    <aside className="hidden h-full min-h-0 lg:flex lg:justify-around lg:items-start lg:flex-col border-r border-gray-200 w-50 dark:border-gray-700 pl-4">
-
+   <aside className="h-full border-r border-gray-200 dark:border-gray-700 pl-4 w-50">
       <section className="flex h-full min-h-0 w-full overflow-hidden justify-between items-start flex-col py-8">
 
         {/* Subjects */}

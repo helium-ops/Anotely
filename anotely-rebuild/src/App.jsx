@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import { Toaster } from "react-hot-toast";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AuthProvider, { useAuth } from "./context/AuthProvider";
 import AuthControls from "./components/AuthControls";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -8,8 +8,11 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./components/ResetPassword";
 import Home from "./pages/Home";
 import SubjectProvider from "./context/SubjectProvider";
+import QuizProvider from "./context/QuizProvider";
 
 function Container() {
+  const nav = useRef(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     try {
       const savedTheme = JSON.parse(localStorage.getItem("theme"));
@@ -27,7 +30,7 @@ function Container() {
   return (
     <section className="w-full h-full dark:bg-black dark:text-white fixed">
       <Toaster position="top-right" />
-      <Header theme={theme} setTheme={setTheme} />
+      <Header theme={theme} setTheme={setTheme} isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
 
       <section className="h-full w-screen">
         <Routes>
@@ -37,7 +40,7 @@ function Container() {
               <Route path="reset-password" element={<ResetPassword />} />
             </Route>
           ) : (
-            <Route path="/*" element={<Home />} />
+            <Route path="/*" element={<Home nav={nav} isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen}/>} />
           )}
         </Routes>
       </section>
@@ -50,7 +53,9 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <SubjectProvider>
+          <QuizProvider>
           <Container />
+          </QuizProvider>
         </SubjectProvider>
       </AuthProvider>
     </BrowserRouter>

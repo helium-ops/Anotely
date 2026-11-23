@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant menuOpen (&:where(.menuOpen, .menuOpen *));
 
 @layer components{
     .btn{
