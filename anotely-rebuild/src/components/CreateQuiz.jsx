@@ -78,12 +78,12 @@ const CreateQuiz = () => {
                     id="name"
                     placeholder="Question name"
                     className="w-[60%] h-[5vh] rounded-2xl border border-gray-300 dark:border-gray-800 border-[2.5px] placeholder:font-semibold placeholder:text-sm pl-2.5 outline-none"
-                    onClick={(e)=>setQuiz(
+                    onChange={(e)=>setQuiz(
                       {
                         ...quiz,
-                        questions: quiz.questions.map((question)=>question.id === question.id ? {
+                        questions: quiz.questions.map((q)=>q.id === question.id ? {
                           ...question,
-                          name: e.target.value
+                          questionName: e.target.value
                         } : question)
                       }
                     )}
