@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Quizzes = () => {
   const { currentUser } = useAuth();
-  const { makeQuiz } = useQuiz();
+  const { makeQuiz, deleteQuiz } = useQuiz();
   const [changeName, setChangeName] = useState(null);
   const [menuOpen, setMenuOpen] = useState(null);
   const quizzes = currentUser?.quizzes ?? [];
@@ -50,7 +50,7 @@ const Quizzes = () => {
                    <button className='p-3 hover:bg-white/5 text-lg' onClick={()=>setMenuOpen(null)}><X size={20}/></button>
                     <div className='flex justify-start items-start flex-col gap-2 font-semibold pr-3'>
                       <button onClick={()=>setChangeName(quiz.id)}>Rename</button>
-                      <button>Delete</button>
+                      <button onClick={()=>deleteQuiz(quiz.id)}>Delete</button>
                     </div>
                   </section>
                 )}
