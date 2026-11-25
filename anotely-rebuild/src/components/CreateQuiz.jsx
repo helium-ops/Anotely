@@ -43,7 +43,7 @@ const CreateQuiz = () => {
 
       <section className="flex justify-center items-center flex-wrap gap-3 w-[80%]">
 
-        {quiz.questions.map((question) => {
+        {quiz.questions.map((question, index) => {
           const id = question.id;
           return(
           <section
@@ -53,7 +53,7 @@ const CreateQuiz = () => {
 
             <header className="flex justify-center items-start flex-col gap-1">
               <h1 className="text-lg md:text-xl xl:text-2xl font-bold">
-                {question.name}
+                Question {index + 1}
               </h1>
 
               <h3 className="text-sm md:text-md xl:text-md font-semibold text-gray-600 dark:text-gray-500">
