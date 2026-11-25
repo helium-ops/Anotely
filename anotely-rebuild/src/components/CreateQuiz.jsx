@@ -75,11 +75,11 @@ const CreateQuiz = () => {
                 />
               </div>
               <section className="flex justify-start items-start flex-col gap-2 scale-90">
-              {question.answers.map((answer)=>{
+              {question.answers.map((answer, index)=>{
                 return(
                   <div className="flex justify-start items-center gap-2">
                 <label htmlFor={answer.id} className="font-semibold">
-                  Answer
+                  Answer {index + 1}
                 </label>
 
                 <input
@@ -137,7 +137,7 @@ const CreateQuiz = () => {
 
       </section>
 
-      <button className="btn flex justify-center gap-1 items-center h-13 w-42 rounded-sm scale-90 lg:scale-100">
+      <button className="btn flex justify-center gap-1 items-center h-13 w-44 rounded-sm scale-90 lg:scale-100">
         Create your quiz <Plus size={20} />
       </button>
 
