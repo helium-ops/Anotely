@@ -9,6 +9,7 @@ import Topic from "../components/Topic";
 import Note from "../components/Note";
 import Quizzes from "../components/Quizzes";
 import CreateQuiz from "../components/CreateQuiz";
+import Quiz from "../components/Quiz";
 
 const Home = ({nav, isNavOpen, setIsNavOpen}) => {
   const { currentUser } = useAuth();
@@ -34,6 +35,9 @@ const notes = (topics ?? []).flatMap(
         ))}
         {notes.map((note)=>(
          <Route path={`/${note.id}`} key={note.id} element={<Note note={note}/>}/>
+        ))}
+        {currentUser != null && currentUser.quizzes?.map((quiz)=>(
+          <Route path={quiz.id} element={<Quiz quiz={quiz}/>}/>
         ))}
       </Routes>
     </main>
