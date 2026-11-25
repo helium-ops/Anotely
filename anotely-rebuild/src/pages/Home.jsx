@@ -7,6 +7,8 @@ import { useAuth } from "../context/AuthProvider";
 import Subject from "../components/Subject";
 import Topic from "../components/Topic";
 import Note from "../components/Note";
+import Quizzes from "../components/Quizzes";
+import CreateQuiz from "../components/CreateQuiz";
 
 const Home = ({nav, isNavOpen, setIsNavOpen}) => {
   const { currentUser } = useAuth();
@@ -17,11 +19,13 @@ const notes = (topics ?? []).flatMap(
   (topic) => topic.notes ?? [],
 )
   return (
-    <main className="h-165 min-h-0 w-full flex justify-start items-center overflow-hidden relative">
+    <main className="h-165 min-h-0 w-full flex justify-start items-center overflow-hidden relative flex-row">
       <Navbar nav={nav} isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path="subjects" element={<Subjects />} />
+        <Route path='quizzes' element={<Quizzes/>}/>
+        <Route path='makeQuiz' element={<CreateQuiz/>}/>
         {currentUser != null && currentUser.subjects?.map((subject)=>(
           <Route path={`/${subject.id}`} key={subject.id} element={<Subject subject={subject}/>}/>
         ))}

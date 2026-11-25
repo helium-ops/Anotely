@@ -19,9 +19,11 @@ function Container() {
       if (savedTheme === "dark" || savedTheme === "light") {
         return savedTheme;
       }
-      return savedTheme;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     } catch {
-      return window.matchMedia("(prefers-colour-scheme: dark)").matches
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
     }

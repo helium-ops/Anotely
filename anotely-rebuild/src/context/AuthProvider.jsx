@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
 
   setCurrentUser(intendedUser);
   toast.success(`Welcome back, ${email}`);
-  localStorage.setItem("user", JSON.stringify(email));
+  localStorage.setItem("user", email);
   navigate("/");
 }
 
