@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { useAuth } from './AuthProvider'
+import toast from 'react-hot-toast';
 
 const QuizContext = createContext(null);
 
@@ -7,6 +8,10 @@ const QuizProvider = ({children}) => {
   const { currentUser, setCurrentUser, users, setUsers } = useAuth();
   const quizzes = currentUser?.quizzes ?? [];
   function makeQuiz(quiz){
+    if(quiz.questions.find((question)=>question.correctAnswer === '')){
+      toast.error('Have a correct answer!');
+      return;
+    }
     if(quiz.questions.length === 0){return;}
     const updatedQuizzes = [...quizzes, quiz];
     const updatedUser = {
