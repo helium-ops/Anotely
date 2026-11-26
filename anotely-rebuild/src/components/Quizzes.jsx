@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Quizzes = () => {
   const { currentUser } = useAuth();
-  const { makeQuiz, deleteQuiz } = useQuiz();
+  const { makeQuiz, deleteQuiz, renameQuiz } = useQuiz();
   const [changeName, setChangeName] = useState(null);
   const [menuOpen, setMenuOpen] = useState(null);
   const quizzes = currentUser?.quizzes ?? [];
@@ -39,6 +39,11 @@ const Quizzes = () => {
                     changeName !== quiz.id ?
                 <h1 className='w-full truncate text-2xl font-bold' title={quiz.name}>{quiz.name}</h1> : 
                 <input type="text" defaultValue={quiz.name} className='w-full rounded-md border border-white pl-2 font-bold outline-none dark:border-black'
+                onKeyDown={(e)=>{
+                  if(e.key != 'Enter')return;
+                  renameQuiz(quiz.id, e.target.value);
+                  setChangeName(null);
+                }}
                 />
                   }
                     </div>

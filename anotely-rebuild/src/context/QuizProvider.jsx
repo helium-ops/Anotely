@@ -29,8 +29,24 @@ const QuizProvider = ({children}) => {
     setUsers(updatedUsers)
     localStorage.setItem('users', JSON.stringify(updatedUsers));
   }
+  function renameQuiz(quizId, name){
+    const targettedQuiz = quizzes.find((quiz)=>quiz.id === quizId);
+    const updatedQuiz = {
+      ...targettedQuiz,
+      name: name
+    };
+    const updatedQuizzes = quizzes.map((quiz)=>quiz.id === quizId ? updatedQuiz : quiz);
+    const updatedUser = {
+      ...currentUser,
+      quizzes: updatedQuizzes
+    };
+    const updatedUsers = users.map((user)=>user.id === currentUser.id ? updatedUser : user);
+    setCurrentUser(updatedUser);
+    setUsers(updatedUsers)
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
   return (
-    <QuizContext.Provider value={{makeQuiz, deleteQuiz}}>
+    <QuizContext.Provider value={{makeQuiz, deleteQuiz, renameQuiz}}>
       {children}
     </QuizContext.Provider>
   )
