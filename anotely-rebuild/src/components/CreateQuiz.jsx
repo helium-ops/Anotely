@@ -83,9 +83,9 @@ const CreateQuiz = () => {
                       {
                         ...quiz,
                         questions: quiz.questions.map((q)=>q.id === question.id ? {
-                          ...question,
+                          ...q,
                           questionName: e.target.value
-                        } : question)
+                        } : q)
                       }
                     )}
                   />
