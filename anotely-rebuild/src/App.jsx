@@ -9,6 +9,8 @@ import ResetPassword from "./components/ResetPassword";
 import Home from "./pages/Home";
 import SubjectProvider from "./context/SubjectProvider";
 import QuizProvider from "./context/QuizProvider";
+import FocusSessionProvider from "./context/FocusSessionProvider";
+
 
 function Container() {
   const nav = useRef(null);
@@ -56,7 +58,9 @@ function App() {
       <AuthProvider>
         <SubjectProvider>
           <QuizProvider>
+            <FocusSessionProvider>
           <Container />
+          </FocusSessionProvider>
           </QuizProvider>
         </SubjectProvider>
       </AuthProvider>
