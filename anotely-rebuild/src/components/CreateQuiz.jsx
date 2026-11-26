@@ -8,6 +8,7 @@ const CreateQuiz = () => {
     id: crypto.randomUUID(),
     questions: [],
     points: 0,
+    questionsRight: 0
   });
   const { makeQuiz } = useQuiz();
 
@@ -55,7 +56,7 @@ const CreateQuiz = () => {
           return (
             <section
               key={question.id}
-              className="flex justify-start items-start flex-col gap-2 bg-gray-200 dark:bg-gray-700 rounded-xl w-70 h-auto min-h-30 relative p-4 pb-14"
+              className="flex justify-start items-start flex-col gap-2 bg-gray-200 dark:bg-gray-700 rounded-xl w-88 h-auto min-h-30 relative p-4 pb-14"
             >
               <header className="flex justify-center items-start flex-col gap-1">
                 <h1 className="text-lg md:text-xl xl:text-2xl font-bold">
@@ -89,10 +90,10 @@ const CreateQuiz = () => {
                     )}
                   />
                 </div>
-                <section className="flex justify-start items-start flex-col gap-2 scale-90">
+                <section className="flex justify-start items-start flex-col gap-2 scale-90 w-full">
                   {question.answers.map((answer, index) => {
                     return (
-                      <div className="flex justify-start items-center gap-2" key={answer.id}>
+                      <div className="flex justify-start items-center gap-2 w-full" key={answer.id}>
                         <label htmlFor={answer.id} className="font-semibold">
                           Answer {index + 1}
                         </label>
@@ -123,6 +124,20 @@ const CreateQuiz = () => {
                             setQuiz(updatedQuiz);
                           }}
                         />
+                        <button className="rounded-full h-10 w-11 flex justify-center items-center bg-green-700 dark:bg-green-500"
+                        onClick={()=>{
+                          const updatedQuestion = {
+                            ...question,
+                            correctAnswer: answer.name
+                          }
+                            const updatedQuiz = {
+                              ...quiz,
+                              questions: quiz.questions.map((q) =>
+                                q.id === question.id ? updatedQuestion : q,
+                              ),
+                            };
+                            setQuiz(updatedQuiz);
+                        }}><Check size={20} strokeWidth={3}/></button>
                       </div>
                     );
                   })}
