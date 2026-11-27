@@ -3,10 +3,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useSubject } from "../context/SubjectProvider";
+import { useFocusSession } from "../context/FocusSessionProvider";
 
 const Navbar = ({ nav, isNavOpen, setIsNavOpen }) => {
   const {  currentUser } = useAuth();
   const { makeSubject } = useSubject();
+  const { makeFocusSession } = useFocusSession();
   const navigate = useNavigate();
 
   const subjects =  currentUser?.subjects ?? [];
@@ -113,8 +115,11 @@ const Navbar = ({ nav, isNavOpen, setIsNavOpen }) => {
           )}
         </div>
 
-        <button className="btn min-w-30 h-10 font-medium rounded-sm">
-          New sesh
+        <button className="btn min-w-35 h-11 font-medium rounded-sm"
+        onClick={()=>{
+          focusSessions === 0 ? makeFocusSession() : navigate('/focusSessions')
+        }}>
+          {focusSessions.length === 0 ? "First sesh" : "See all sessions"}
         </button>
       </section>
 
