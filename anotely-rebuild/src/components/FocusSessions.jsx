@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const FocusSessions = () => {
     const { currentUser } = useAuth();
-    const { makeFocusSession, deleteFocusSession } = useFocusSession();
+    const { makeFocusSession, deleteFocusSession, renameFocusSession } = useFocusSession();
     const focusSessions = currentUser?.focusSessions ?? [];
     const [menuOpen, setMenuOpen] = useState(null);
     const [changeName, setChangeName] = useState(null);
@@ -43,7 +43,10 @@ const FocusSessions = () => {
                       <h1 className='w-full truncate text-2xl font-bold' title={sesh.name}>{sesh.name}</h1> :
                       <input type="text" defaultValue={sesh.name} className='w-full rounded-md border border-white pl-2 font-bold outline-none dark:border-black'
                         onKeyDown={(e)=>{
-                          if(e.key != 'Enter')return;
+                          if(e.key === 'Enter'){
+                          renameFocusSession(sesh.id, e.target.value);
+                          setChangeName(null);
+                          }
                         }}
                       />
                   }
@@ -59,7 +62,7 @@ const FocusSessions = () => {
                   <section className='bg-black dark:bg-gray-900 h-35 w-37 fixed flex justify-start items-end flex-col text-white rounded-xl z-999'>
                     <button className='p-3 hover:bg-white/5 text-lg' onClick={()=>setMenuOpen(null)}><X size={20}/></button>
                     <div className='flex justify-start items-start flex-col gap-2 font-semibold pr-3'>
-                      <button>Rename</button>
+                      <button onClick={()=>setChangeName(sesh.id)}>Rename</button>
                       <button onClick={()=>deleteFocusSession(sesh.id)}>Delete</button>
                     </div>
                   </section>
