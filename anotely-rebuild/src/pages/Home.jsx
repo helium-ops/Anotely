@@ -28,7 +28,7 @@ const notes = (topics ?? []).flatMap(
         <Route path="subjects" element={<Subjects />} />
         <Route path='quizzes' element={<Quizzes/>}/>
         <Route path='makeQuiz' element={<CreateQuiz/>}/>
-        <Route path='subjects' element={<FocusSessions/>}/>
+        <Route path='focusSessions' element={<FocusSessions/>}/>
         {currentUser != null && currentUser.subjects?.map((subject)=>(
           <Route path={`/${subject.id}`} key={subject.id} element={<Subject subject={subject}/>}/>
         ))}

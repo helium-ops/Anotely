@@ -23,8 +23,20 @@ const FocusSessionProvider = ({children}) => {
       setUsers(updatedUsers);
       localStorage.setItem('users', JSON.stringify(updatedUsers));
     }
+    function deleteFocusSession(id){
+      const targettedSesh = focusSessions.find((sesh)=>sesh.id === id);
+      const updatedFocusSessions = focusSessions.filter((sesh)=>sesh.id != targettedSesh.id);
+      const updatedUser = {
+        ...currentUser,
+        focusSessions: updatedFocusSessions
+      };
+      const updatedUsers = users.map((user)=>user.id === currentUser.id ? updatedUser : user);
+      setCurrentUser(updatedUser);
+      setUsers(updatedUsers);
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+    }
   return (
-    <FocusSessionContext.Provider value={{makeFocusSession}}>
+    <FocusSessionContext.Provider value={{makeFocusSession, deleteFocusSession}}>
         {children}
     </FocusSessionContext.Provider>
   )
