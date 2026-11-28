@@ -106,7 +106,7 @@ const Navbar = ({ nav, isNavOpen, setIsNavOpen }) => {
             focusSessions.slice(0, 3).map((sesh) => (
               <Link
                 key={sesh.id}
-                to={sesh.id}
+                to={`/${sesh.id}`}
                 onClick={closeMobileNav}
               >
                 {sesh.name}
