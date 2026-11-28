@@ -11,6 +11,7 @@ import Quizzes from "../components/Quizzes";
 import CreateQuiz from "../components/CreateQuiz";
 import Quiz from "../components/Quiz";
 import FocusSessions from "../components/FocusSessions";
+import FocusSession from "../components/FocusSession";
 
 const Home = ({nav, isNavOpen, setIsNavOpen}) => {
   const { currentUser } = useAuth();
@@ -40,6 +41,9 @@ const notes = (topics ?? []).flatMap(
         ))}
         {currentUser != null && currentUser.quizzes?.map((quiz)=>(
           <Route path={quiz.id} element={<Quiz quiz={quiz}/>}/>
+        ))}
+        {currentUser != null && currentUser.focusSessions?.map((sesh)=>(
+          <Route key={sesh.id} path={sesh.id} element={<FocusSession sesh={sesh}/>}/>
         ))}
       </Routes>
     </main>
